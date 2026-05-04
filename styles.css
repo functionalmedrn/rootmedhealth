@@ -170,12 +170,12 @@ body.provider-mode{
 }
 
 /* ── MAIN ── */
-.main{max-width:920px;margin:0 auto;padding:18px 16px 80px}
+.main{max-width:1280px;margin:0 auto;padding:24px 32px 80px}
 .view{display:none;animation:fadeUp .3s ease}
 .view.active{display:block}
 
 /* ── CARDS ── */
-.card{border-radius:15px;padding:20px;margin-bottom:16px}
+.card{border-radius:15px;padding:28px;margin-bottom:18px}
 .patient-mode .card{
   background:var(--white);
   border:1px solid rgba(212,184,150,.28);
@@ -186,10 +186,10 @@ body.provider-mode{
   border:1px solid rgba(45,74,48,.7);
   box-shadow:0 3px 16px rgba(0,0,0,.2);
 }
-.card-title{font-family:'Cormorant Garamond',serif;font-size:20px;margin-bottom:3px}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:24px;margin-bottom:5px}
 .patient-mode .card-title{color:var(--deep)}
 .provider-mode .card-title{color:var(--pt)}
-.card-sub{font-size:11px;margin-bottom:16px;line-height:1.55}
+.card-sub{font-size:13px;margin-bottom:18px;line-height:1.6}
 .patient-mode .card-sub{color:var(--gray)}
 .provider-mode .card-sub{color:var(--pm)}
 .section-label{
@@ -204,8 +204,8 @@ body.provider-mode{
 
 /* ── INPUTS ── */
 .inp{
-  width:100%;padding:10px 13px;border-radius:10px;
-  font-family:'DM Sans',sans-serif;font-size:13px;
+  width:100%;padding:12px 15px;border-radius:10px;
+  font-family:'DM Sans',sans-serif;font-size:14px;
   outline:none;transition:border-color .18s;
 }
 .patient-mode .inp{
@@ -232,10 +232,10 @@ select.inp{-webkit-appearance:none}
 
 /* ── BUTTONS ── */
 .btn-primary{
-  width:100%;padding:12px;border-radius:10px;border:none;
+  width:100%;padding:14px;border-radius:11px;border:none;
   background:linear-gradient(135deg,var(--sage),var(--sage-dark));
   color:#fff;font-family:'DM Sans',sans-serif;
-  font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;
+  font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;
   display:flex;align-items:center;justify-content:center;gap:7px;
 }
 .btn-primary:hover:not(:disabled){
@@ -387,7 +387,7 @@ select.inp{-webkit-appearance:none}
 .provider-mode .res-tag{background:rgba(45,74,48,.6);color:rgba(168,197,160,.5)}
 
 /* ── ONBOARDING ── */
-.ob-wrap{max-width:520px;margin:0 auto;padding:16px 0}
+.ob-wrap{max-width:720px;margin:0 auto;padding:24px 0}
 .step-dots{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:24px}
 .sdot{
   width:8px;height:8px;border-radius:50%;
@@ -396,30 +396,30 @@ select.inp{-webkit-appearance:none}
 .sdot.active{background:var(--sage);width:24px;border-radius:4px}
 .sdot.done{background:var(--sage)}
 .ob-card{
-  background:var(--white);border-radius:18px;padding:28px;
+  background:var(--white);border-radius:20px;padding:36px;
   border:1px solid rgba(212,184,150,.3);display:none;animation:fadeUp .35s ease;
 }
 .ob-card.active{display:block}
-.ob-icon{font-size:36px;display:block;margin-bottom:14px;text-align:center}
+.ob-icon{font-size:48px;display:block;margin-bottom:16px;text-align:center}
 .ob-title{
-  font-family:'Cormorant Garamond',serif;font-size:24px;
-  text-align:center;color:var(--deep);margin-bottom:6px;
+  font-family:'Cormorant Garamond',serif;font-size:32px;
+  text-align:center;color:var(--deep);margin-bottom:8px;
 }
-.ob-sub{font-size:12px;color:var(--gray);text-align:center;line-height:1.6;margin-bottom:22px}
-.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.ob-sub{font-size:14px;color:var(--gray);text-align:center;line-height:1.6;margin-bottom:26px}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
 .role-card{
-  border:2px solid rgba(212,184,150,.35);border-radius:14px;
-  padding:18px 14px;text-align:center;cursor:pointer;
+  border:2px solid rgba(212,184,150,.35);border-radius:16px;
+  padding:24px 18px;text-align:center;cursor:pointer;
   transition:all .2s;background:rgba(250,246,239,.6);
 }
 .role-card:hover{border-color:var(--sage-light)}
 .role-card.selected{border-color:var(--sage);background:rgba(77,114,83,.06)}
-.role-emoji{font-size:26px;display:block;margin-bottom:7px}
+.role-emoji{font-size:36px;display:block;margin-bottom:10px}
 .role-name{
-  font-family:'Cormorant Garamond',serif;font-size:16px;
-  font-weight:600;color:var(--deep);margin-bottom:2px;
+  font-family:'Cormorant Garamond',serif;font-size:20px;
+  font-weight:600;color:var(--deep);margin-bottom:4px;
 }
-.role-desc{font-size:10px;color:var(--gray);line-height:1.4}
+.role-desc{font-size:12px;color:var(--gray);line-height:1.5}
 .check-row{
   border:1.5px solid rgba(212,184,150,.4);border-radius:11px;padding:14px;
   margin-bottom:12px;cursor:pointer;display:flex;align-items:flex-start;
@@ -435,15 +435,15 @@ select.inp{-webkit-appearance:none}
 .check-row.checked .checkbox{
   background:var(--sage);border-color:var(--sage);color:#fff;font-size:12px;
 }
-.check-label{font-size:12px;color:var(--deep);font-weight:500;line-height:1.4}
-.check-sub{font-size:10px;color:var(--gray);margin-top:2px;line-height:1.5}
+.check-label{font-size:14px;color:var(--deep);font-weight:500;line-height:1.4}
+.check-sub{font-size:12px;color:var(--gray);margin-top:3px;line-height:1.5}
 .disc-scroll{
   background:rgba(250,246,239,.8);border:1px solid rgba(212,184,150,.3);
-  border-radius:11px;padding:14px 16px;max-height:180px;overflow-y:auto;
-  margin-bottom:12px;font-size:11px;color:var(--gray);
-  line-height:1.7;scrollbar-width:thin;
+  border-radius:11px;padding:16px 20px;max-height:260px;overflow-y:auto;
+  margin-bottom:14px;font-size:13px;color:var(--gray);
+  line-height:1.8;scrollbar-width:thin;
 }
-.disc-scroll h4{font-size:11px;font-weight:500;color:var(--deep);margin:10px 0 4px}
+.disc-scroll h4{font-size:13px;font-weight:500;color:var(--deep);margin:12px 0 5px}
 .disc-scroll h4:first-child{margin-top:0}
 .success-ring{
   width:70px;height:70px;border-radius:50%;
@@ -1159,4 +1159,16 @@ select.inp{-webkit-appearance:none}
   .mb-banner{flex-direction:column;text-align:center}
   .header{padding:8px 12px}
   .main{padding:14px 12px 60px}
+  .ob-wrap{padding:12px 0}
+  .ob-card{padding:22px 18px}
+  .ob-title{font-size:24px}
+  .ob-sub{font-size:12px}
+  .role-emoji{font-size:28px}
+  .role-name{font-size:17px}
+  .role-desc{font-size:11px}
+  .card{padding:18px}
+  .card-title{font-size:20px}
+  .card-sub{font-size:12px}
+  .inp{font-size:13px;padding:10px 12px}
+  .btn-primary{font-size:13px;padding:12px}
 }
