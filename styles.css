@@ -139,7 +139,7 @@ body.provider-mode{
 
 /* ── TABS ── */
 .main-tabs{
-  display:flex;padding:0 16px;overflow-x:auto;
+  display:flex;padding:0 24px;overflow-x:auto;
   scrollbar-width:none;transition:all .3s;
 }
 .main-tabs::-webkit-scrollbar{display:none}
@@ -152,18 +152,19 @@ body.provider-mode{
   border-bottom:1px solid rgba(45,74,48,.7);
 }
 .mtab{
-  padding:11px 14px;border:none;background:transparent;
-  font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;
+  flex:1;padding:14px 10px;border:none;background:transparent;
+  font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;
   cursor:pointer;transition:all .18s;
-  border-bottom:2px solid transparent;white-space:nowrap;
-  display:flex;align-items:center;gap:5px;
+  border-bottom:3px solid transparent;white-space:nowrap;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  min-width:0;
 }
 .patient-mode .mtab{color:var(--gray)}
-.patient-mode .mtab:hover{color:var(--deep)}
-.patient-mode .mtab.active{color:var(--sage-dark);border-bottom-color:var(--sage)}
+.patient-mode .mtab:hover{color:var(--deep);background:rgba(122,158,126,.06)}
+.patient-mode .mtab.active{color:var(--sage-dark);border-bottom-color:var(--sage);background:rgba(122,158,126,.08)}
 .provider-mode .mtab{color:rgba(168,197,160,.45)}
-.provider-mode .mtab:hover{color:var(--pt)}
-.provider-mode .mtab.active{color:var(--sage-light);border-bottom-color:var(--sage-light)}
+.provider-mode .mtab:hover{color:var(--pt);background:rgba(77,114,83,.08)}
+.provider-mode .mtab.active{color:var(--sage-light);border-bottom-color:var(--sage-light);background:rgba(77,114,83,.1)}
 .tier-lock{
   font-size:9px;background:rgba(201,168,76,.15);
   color:var(--gold);padding:1px 6px;border-radius:6px;font-weight:500;
@@ -1171,4 +1172,6 @@ select.inp{-webkit-appearance:none}
   .card-sub{font-size:12px}
   .inp{font-size:13px;padding:10px 12px}
   .btn-primary{font-size:13px;padding:12px}
+  .main-tabs{padding:0}
+  .mtab{flex:none;padding:11px 12px;font-size:11px;justify-content:flex-start}
 }
