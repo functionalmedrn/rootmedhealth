@@ -165,7 +165,7 @@ body.provider-mode{
 .patient-mode .mtab{color:var(--gray)}
 .patient-mode .mtab:hover{color:var(--deep);background:rgba(122,158,126,.06)}
 .patient-mode .mtab.active{color:var(--sage-dark);border-bottom-color:var(--sage);background:rgba(122,158,126,.08)}
-.provider-mode .mtab{color:rgba(122,158,126,.15)}
+.provider-mode .mtab{color:rgba(45,74,48,.55)}
 .provider-mode .mtab:hover{color:var(--deep);background:rgba(77,114,83,.1)}
 .provider-mode .mtab.active{color:var(--sage-dark);border-bottom-color:var(--sage);background:rgba(77,114,83,.12)}
 .tier-lock{
