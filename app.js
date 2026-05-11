@@ -247,7 +247,7 @@ function setMode(mode, el) {
   document.body.className = isProvider ? 'provider-mode' : 'patient-mode';
   document.getElementById('patient-tabs').style.display = isProvider ? 'none' : 'flex';
   document.getElementById('provider-tabs').style.display = isProvider ? 'flex' : 'none';
-  document.getElementById('tier-badge').textContent = isProvider ? '⚕️ Provider' : '🌱 Basic Member';
+  document.getElementById('tier-badge').textContent = isProvider ? '⚕️ Provider + Patient Access' : '🌱 Basic Member';
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   if (isProvider) {
     document.getElementById('v-dashboard').classList.add('active');
@@ -341,9 +341,9 @@ function obStep(n) {
   }
   if (n === 3) {
     const isProv = selectedRole === 'provider';
-    document.getElementById('ob-role-badge').textContent = isProv ? '⚕️ Provider account' : '🌱 Basic membership';
+    document.getElementById('ob-role-badge').textContent = isProv ? '⚕️ Provider + Full Patient Access' : '🌱 Basic membership';
     document.getElementById('ob-success-sub').textContent = isProv
-      ? 'Your provider dashboard is ready — switch to Provider mode in the header.'
+      ? 'Your provider dashboard is ready. You also have full access to the patient platform — use the toggle in the header to switch between your clinical suite and your personal health dashboard anytime.'
       : 'Your personal health platform is ready. Start with the Symptom Checker or complete your Health Intake.';
   }
 }
