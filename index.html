@@ -58,7 +58,7 @@
   <button class="mtab" onclick="switchTab('prov-store',this)">🛍️ DFH Store</button>
   <button class="mtab" onclick="switchTab('builder',this)">🩺 Care Plan Builder</button>
   <button class="mtab" onclick="switchTab('gallery',this)">🖼️ Art Gallery</button>
-  <button class="mtab" onclick="switchProvTab('art-collection')">🖼️ Art Collection</button>
+  <button class="mtab" onclick="switchProvTab('art-collection')">🎨 Clinical Art Collection</button>
 </div>
 
 <div class="main" id="main-content">
@@ -371,6 +371,7 @@
         <span class="sb-perk">Education suite</span>
         <span class="sb-perk">Care plan builder</span>
         <span class="sb-perk">Art gallery</span>
+        <span class="sb-perk">Clinical Art Collection</span>
         <span class="sb-perk">DFH store</span>
         <span class="sb-perk">⭐ Full patient access</span>
         <span class="sb-perk">Personal health tracking</span>
@@ -398,6 +399,7 @@
     <div class="da-item" onclick="switchProvTab('handouts')"><div class="da-icon">📄</div><div class="da-text"><div class="da-main">Generate a patient handout</div><div class="da-sub">Print-ready, plain-language education</div></div><div class="da-arrow">→</div></div>
     <div class="da-item" onclick="switchProvTab('labs')"><div class="da-icon">🧪</div><div class="da-text"><div class="da-main">Look up a lab value</div><div class="da-sub">Conventional vs functional ranges</div></div><div class="da-arrow">→</div></div>
     <div class="da-item" onclick="switchProvTab('protocols')"><div class="da-icon">📋</div><div class="da-text"><div class="da-main">View protocol library</div><div class="da-sub">6 IFM-informed clinical protocols</div></div><div class="da-arrow">→</div></div>
+    <div class="da-item" onclick="switchProvTab('art-collection')"><div class="da-icon">🎨</div><div class="da-text"><div class="da-main">Browse Clinical Art Collection</div><div class="da-sub">Order prints for your practice via Fine Art America</div></div><div class="da-arrow">→</div></div>
     <div class="da-item" onclick="setMode('patient',document.getElementById('pill-patient'))"><div class="da-icon">🌱</div><div class="da-text"><div class="da-main">Switch to my patient dashboard</div><div class="da-sub">Track your health, care plan, recipes, wearables — included free</div></div><div class="da-arrow">→</div></div>
   </div>
   <div class="disc"><span style="font-size:13px;flex-shrink:0">⚠️</span><div class="disc-txt"><strong>Provider platform</strong>Root Med Health provides supplementary educational tools. Providers are solely responsible for all clinical decisions. Root Med Health · rootmedhealth.com</div></div>
@@ -570,7 +572,7 @@
   <div class="disc"><span style="font-size:13px;flex-shrink:0">⚠️</span><div class="disc-txt"><strong>Provider responsibility</strong>Care plans are the sole clinical responsibility of the provider. Root Med Health · rootmedhealth.com</div></div>
 </div>
 
-<!-- ART GALLERY -->
+<!-- ART GALLERY (upload tool) -->
 <div id="v-gallery" class="view">
   <div class="card">
     <div class="card-title">Office Art Gallery <span class="prov-tag">Midjourney Upload</span></div>
@@ -588,6 +590,15 @@
       Upload your first Midjourney image to get started.
     </div>
   </div>
+</div>
+
+<!-- CLINICAL ART COLLECTION (Fine Art America storefront) -->
+<div id="v-art-collection" class="view">
+  <iframe
+    src="clinical-art-collection.html"
+    style="width:100%;height:calc(100vh - 120px);border:none;border-radius:12px;"
+    title="Clinical Art Collection">
+  </iframe>
 </div>
 
 <!-- FOOTER -->
