@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clinical Art Collection — Root Med Health</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f7f5;
+    --card: #ffffff;
+    --border: #e2e8e4;
+    --border-hover: #a8c8b8;
+    --teal: #0F6E56;
+    --teal-light: #E1F5EE;
+    --teal-mid: #1D9E75;
+    --gold: #854F0B;
+    --text: #1a2420;
+    --text2: #4a5e56;
+    --muted: #7a8e84;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; }
+
+  .page-header { padding: 44px 48px 0; background: #fff; border-bottom: 1px solid var(--border); }
+  .header-inner { max-width: 1400px; margin: 0 auto; padding-bottom: 28px; }
+  .breadcrumb { font-size: 12px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+  .breadcrumb span { color: var(--teal-mid); }
+  .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(30px, 4vw, 48px); font-weight: 300; line-height: 1.1; margin-bottom: 10px; }
+  .page-title em { font-style: italic; color: var(--teal); }
+  .page-subtitle { font-size: 14px; color: var(--text2); max-width: 560px; line-height: 1.7; margin-bottom: 24px; }
+
+  .filters { display: flex; gap: 6px; flex-wrap: wrap; }
+  .filter-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 6px 14px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 400; letter-spacing: 0.07em; cursor: pointer; transition: all 0.18s; text-transform: uppercase; }
+  .filter-btn:hover { border-color: var(--teal-mid); color: var(--teal); }
+  .filter-btn.active { background: var(--teal); border-color: var(--teal); color: #fff; font-weight: 500; }
+
+  .top-bar { max-width: 1400px; margin: 0 auto; padding: 20px 48px 4px; }
+  .banner-inner { background: var(--teal-light); border: 1px solid #9FE1CB; border-radius: 10px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px; }
+  .banner-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+  .banner-text { font-size: 13px; color: #085041; line-height: 1.6; }
+  .banner-text strong { font-weight: 500; }
+
+  .stats-bar { max-width: 1400px; margin: 0 auto; padding: 14px 48px 0; display: flex; align-items: center; gap: 18px; }
+  .stat { font-size: 12px; color: var(--muted); }
+  .stat strong { color: var(--text); font-weight: 500; }
+  .stat-div { width: 1px; height: 12px; background: var(--border); }
+
+  .section-label { max-width: 1400px; margin: 0 auto; padding: 28px 48px 12px; display: flex; align-items: center; gap: 14px; }
+  .section-label-text { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
+  .section-label-line { flex: 1; height: 1px; background: var(--border); }
+
+  .gallery-grid { max-width: 1400px; margin: 0 auto; padding: 0 48px 8px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+
+  .art-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: all 0.22s ease; display: flex; flex-direction: column; }
+  .art-card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(15,110,86,0.08), 0 2px 8px rgba(0,0,0,0.05); }
+
+  .card-image { width: 100%; aspect-ratio: 1/1; position: relative; overflow: hidden; }
+  .card-image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #eef4f1 0%, #e4ede9 100%); }
+  .placeholder-icon { font-size: 36px; opacity: 0.3; }
+  .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .art-card:hover .card-image img { transform: scale(1.04); }
+
+  .card-cat { position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.9); border: 1px solid var(--border); color: var(--teal); font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; }
+
+  .card-body { padding: 16px 18px 10px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .card-title { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 400; line-height: 1.2; color: var(--text); }
+  .card-caption { font-size: 13px; color: var(--text2); line-height: 1.65; flex: 1; }
+
+  .card-footer { padding: 0 18px 16px; display: flex; gap: 8px; }
+  .btn-order { flex: 1; background: var(--teal); color: #fff; border: none; padding: 9px 14px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.18s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; }
+  .btn-order:hover { background: #085041; transform: translateY(-1px); }
+  .btn-preview { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 9px 13px; border-radius: 8px; font-size: 13px; cursor: pointer; transition: all 0.18s; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+  .btn-preview:hover { border-color: var(--teal-mid); color: var(--teal); }
+
+  .page-footer { max-width: 1400px; margin: 24px auto 0; padding: 24px 48px 48px; text-align: center; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
+
+  @media (max-width: 768px) {
+    .page-header, .top-bar, .stats-bar, .gallery-grid, .section-label { padding-left: 20px; padding-right: 20px; }
+    .gallery-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-inner">
+    <div class="breadcrumb">Provider Dashboard / <span>Clinical Art Collection</span></div>
+    <h1 class="page-title">Clinical <em>Art Collection</em></h1>
+    <p class="page-subtitle">Curated medical and wellness art for clinical environments. Each piece blends scientific accuracy with contemporary aesthetics — ideal for patient education and office decor.</p>
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterCards('all',this)">All Pieces</button>
+      <button class="filter-btn" onclick="filterCards('hormonal',this)">Hormonal & Metabolic</button>
+      <button class="filter-btn" onclick="filterCards('gut',this)">Gut & Digestive</button>
+      <button class="filter-btn" onclick="filterCards('neuro',this)">Neurological</button>
+      <button class="filter-btn" onclick="filterCards('inflammatory',this)">Inflammatory & Immune</button>
+      <button class="filter-btn" onclick="filterCards('cardiovascular',this)">Cardiovascular</button>
+      <button class="filter-btn" onclick="filterCards('detox',this)">Detoxification</button>
+      <button class="filter-btn" onclick="filterCards('neuro-path',this)">Neuropathy</button>
+      <button class="filter-btn" onclick="filterCards('skin',this)">Skin & Aging</button>
+    </div>
+  </div>
+</div>
+
+<div class="top-bar">
+  <div class="banner-inner">
+    <div class="banner-icon">🖼️</div>
+    <div class="banner-text"><strong>Order premium prints for your practice.</strong> Available in canvas, framed prints, and posters. Click "Order Print" on any piece to visit Fine Art America and select your preferred size and format.</div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><strong id="visible-count">31</strong> pieces available</div>
+  <div class="stat-div"></div>
+  <div class="stat">Multiple sizes & formats</div>
+  <div class="stat-div"></div>
+  <div class="stat">Fulfilled by <strong>Fine Art America</strong></div>
+</div>
+
+<div class="section-label" data-category="hormonal"><span class="section-label-text">Hormonal & Metabolic</span><div class="section-label-line"></div></div>
+<div class="gallery-grid">
+  <div class="art-card" data-category="hormonal"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🦋</span></div><span class="card-cat">Hormonal</span></div><div class="card-body"><div class="card-title">Thyroid Dysfunction</div><div class="card-caption">The thyroid regulates metabolism, energy, temperature, and mood. When it struggles, every system in the body feels it.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/thyroid-disorders-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/thyroid-disorders-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="hormonal"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">⚡</span></div><span class="card-cat">Hormonal</span></div><div class="card-body"><div class="card-title">Adrenal Fatigue</div><div class="card-caption">Chronic stress exhausts the adrenal glands, disrupting cortisol balance and leaving the body in a constant state of depletion.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/toxic-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/toxic-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="hormonal"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🔬</span></div><span class="card-cat">Hormonal</span></div><div class="card-body"><div class="card-title">Insulin Resistance</div><div class="card-caption">When cells stop responding to insulin, blood sugar dysregulation, weight gain, and inflammation follow throughout the body.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/insulin-resistance-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/insulin-resistance-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="hormonal"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🌊</span></div><span class="card-cat">Hormonal</span></div><div class="card-body"><div class="card-title">Menopause & Perimenopause</div><div class="card-caption">Hormonal shifts during menopause affect sleep, mood, weight, bone density, and cardiovascular health simultaneously.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/menopause-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/menopause-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="hormonal"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🔗</span></div><span class="card-cat">Hormonal</span></div><div class="card-body"><div class="card-title">Metabolic Syndrome</div><div class="card-caption">A cluster of interconnected metabolic dysfunctions that dramatically increases the risk of heart disease, diabetes, and chronic illness.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/metabolic-syndrome-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/metabolic-syndrome-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="hormonal"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">☀️</span></div><span class="card-cat">Vitamins</span></div><div class="card-body"><div class="card-title">Vitamin D3</div><div class="card-caption">Far more than a vitamin, D3 regulates immune function, mood, bone density, and hundreds of cellular processes throughout the body.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/vit-d3-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/vit-d3-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="hormonal"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">☀️</span></div><span class="card-cat">Vitamins</span></div><div class="card-body"><div class="card-title">Vitamin D3 2.0</div><div class="card-caption">Far more than a vitamin, D3 regulates immune function, mood, bone density, and hundreds of cellular processes throughout the body.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/vit-d-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/vit-d-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+</div>
+
+<div class="section-label" data-category="gut"><span class="section-label-text">Gut & Digestive</span><div class="section-label-line"></div></div>
+<div class="gallery-grid">
+  <div class="art-card" data-category="gut"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🧬</span></div><span class="card-cat">Gut</span></div><div class="card-body"><div class="card-title">Gut Health</div><div class="card-caption">A compromised intestinal lining allows toxins and particles to escape into the bloodstream, triggering systemic inflammation across the body.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/gut-health-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/gut-health-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="gut"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🦠</span></div><span class="card-cat">Gut</span></div><div class="card-body"><div class="card-title">IBS</div><div class="card-caption">IBS reflects a complex relationship between the gut, the nervous system, and the brain, driven by the gut-brain axis.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/ibs-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/ibs-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="gut"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🌿</span></div><span class="card-cat">Gut</span></div><div class="card-body"><div class="card-title">Chronic Constipation</div><div class="card-caption">Sluggish digestion is rarely just a gut problem, often reflecting deeper imbalances in gut flora, hormones, and lifestyle.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/chronic-constipation-medical-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/chronic-constipation-medical-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="gut"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🍎</span></div><span class="card-cat">Gut</span></div><div class="card-body"><div class="card-title">Food Sensitivities</div><div class="card-caption">Unidentified food triggers drive chronic inflammation, affecting the skin, joints, brain, and immune system far beyond the digestive tract.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/food-sensitivities-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/food-sensitivities-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+</div>
+
+<div class="section-label" data-category="neuro"><span class="section-label-text">Neurological & Mental Health</span><div class="section-label-line"></div></div>
+<div class="gallery-grid">
+  <div class="art-card" data-category="neuro"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🧠</span></div><span class="card-cat">Neurological</span></div><div class="card-body"><div class="card-title">Brain Fog</div><div class="card-caption">Cognitive sluggishness and poor mental clarity are rarely random, often rooted in gut dysfunction, hormonal imbalance, or chronic inflammation.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/brain-fog-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/brain-fog-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="neuro"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">💙</span></div><span class="card-cat">Neurological</span></div><div class="card-body"><div class="card-title">Anxiety & Depression</div><div class="card-caption">Mood disorders have deep biological roots in neurotransmitter imbalance, gut health, inflammation, and nutrient deficiencies.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/anxiety-depression-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/anxiety-depression-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="neuro"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">⚡</span></div><span class="card-cat">Neurological</span></div><div class="card-body"><div class="card-title">Chronic Fatigue</div><div class="card-caption">Persistent exhaustion that rest cannot fix often points to mitochondrial dysfunction, immune dysregulation, and cellular energy failure.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/chronic-fatigue-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/chronic-fatigue-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="neuro"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🌙</span></div><span class="card-cat">Neurological</span></div><div class="card-body"><div class="card-title">Insomnia</div><div class="card-caption">Disrupted sleep is both a symptom and a driver of hormonal imbalance, immune dysfunction, and accelerated aging.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/insomnia-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/insomnia-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="neuro"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🛡️</span></div><span class="card-cat">Neurological</span></div><div class="card-body"><div class="card-title">Early Alzheimer's Prevention</div><div class="card-caption">Protecting brain health begins decades before symptoms appear through targeted nutrition, hormone balance, and reducing neuroinflammation.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/early-alzheimers-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/early-alzheimers-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+</div>
+
+<div class="section-label" data-category="inflammatory"><span class="section-label-text">Inflammatory & Immune</span><div class="section-label-line"></div></div>
+<div class="gallery-grid">
+  <div class="art-card" data-category="inflammatory"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🔥</span></div><span class="card-cat">Immune</span></div><div class="card-body"><div class="card-title">Chronic Inflammation</div><div class="card-caption">Silent and systemic, chronic inflammation is the common thread underlying nearly every major modern disease.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/chronic-inflammation-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/chronic-inflammation-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="inflammatory"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🛡️</span></div><span class="card-cat">Immune</span></div><div class="card-body"><div class="card-title">Autoimmune Dysfunction</div><div class="card-caption">When the immune system loses the ability to distinguish self from threat, it turns its defenses against the body's own healthy tissue.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/autoimmune-dysfunction-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/autoimmune-dysfunction-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="inflammatory"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🛡️</span></div><span class="card-cat">Immune</span></div><div class="card-body"><div class="card-title">Autoimmune Dysfunction 2.0</div><div class="card-caption">When the immune system loses the ability to distinguish self from threat, it turns its defenses against the body's own healthy tissue.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/1-autoimmune-dysfunction-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/1-autoimmune-dysfunction-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="inflammatory"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">💜</span></div><span class="card-cat">Immune</span></div><div class="card-body"><div class="card-title">Fibromyalgia</div><div class="card-caption">Widespread pain and sensitivity in fibromyalgia reflect central nervous system dysregulation, not simply a musculoskeletal condition.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/fibromyalgia-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/fibromyalgia-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="inflammatory"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">⚔️</span></div><span class="card-cat">Immune</span></div><div class="card-body"><div class="card-title">Immune Dysfunction</div><div class="card-caption">A chronically burdened immune system struggles to clear infections, leaving the body in a cycle of inflammation and depletion.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/immune-dysfunction-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/immune-dysfunction-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+</div>
+
+<div class="section-label" data-category="cardiovascular"><span class="section-label-text">Cardiovascular</span><div class="section-label-line"></div></div>
+<div class="gallery-grid">
+  <div class="art-card" data-category="cardiovascular"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">❤️</span></div><span class="card-cat">Cardiovascular</span></div><div class="card-body"><div class="card-title">Cardiovascular</div><div class="card-caption">Compromised circulation deprives tissues of oxygen and nutrients, contributing to fatigue, neuropathy, cognitive decline, and slow healing.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/cardiovascular-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/cardiovascular-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="cardiovascular"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">💔</span></div><span class="card-cat">Cardiovascular</span></div><div class="card-body"><div class="card-title">Cardiovascular Inflammation</div><div class="card-caption">Inflammation within arterial walls is a primary driver of heart disease, independent of cholesterol levels alone.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/cardiovascular-inflammation-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/cardiovascular-inflammation-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="cardiovascular"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">📊</span></div><span class="card-cat">Cardiovascular</span></div><div class="card-body"><div class="card-title">High Blood Pressure</div><div class="card-caption">Elevated blood pressure silently stresses the heart, brain, and kidneys, often driven by inflammation, insulin resistance, and nutrient deficiencies.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/hbp-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/hbp-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+</div>
+
+<div class="section-label" data-category="detox"><span class="section-label-text">Detoxification</span><div class="section-label-line"></div></div>
+<div class="gallery-grid">
+  <div class="art-card" data-category="detox"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">⚗️</span></div><span class="card-cat">Detox</span></div><div class="card-body"><div class="card-title">Toxins</div><div class="card-caption">Daily exposure to environmental toxins in air, food, and water accumulates over time, quietly disrupting cellular function and hormonal balance.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/toxic-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/toxic-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="detox"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🍄</span></div><span class="card-cat">Detox</span></div><div class="card-body"><div class="card-title">Mycotoxin Inflammation</div><div class="card-caption">Mycotoxins from mold exposure accumulate in body tissues, driving chronic inflammation, cognitive symptoms, and immune suppression.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/mycotoxin-inflammation-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/mycotoxin-inflammation-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="detox"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🫀</span></div><span class="card-cat">Detox</span></div><div class="card-body"><div class="card-title">Liver Dysfunction</div><div class="card-caption">The liver is the body's primary detox organ. When overburdened, toxins recirculate, disrupting hormones, energy, and immune function.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/liver-dysfunction-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/liver-dysfunction-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="detox"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🫀</span></div><span class="card-cat">Detox</span></div><div class="card-body"><div class="card-title">Liver Dysfunction 2.0</div><div class="card-caption">The liver is the body's primary detox organ. When overburdened, toxins recirculate, disrupting hormones, energy, and immune function.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/liver-dysfunction20-medical-educational-art-ashley-zemba.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/liver-dysfunction20-medical-educational-art-ashley-zemba.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="detox"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🌫️</span></div><span class="card-cat">Detox</span></div><div class="card-body"><div class="card-title">Environmental Toxins</div><div class="card-caption">Daily exposure to environmental toxins in air, food, and water accumulates over time, quietly disrupting cellular function and hormonal balance.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/enviro-toxins-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/enviro-toxins-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+</div>
+
+<div class="section-label" data-category="neuro-path"><span class="section-label-text">Neuropathy</span><div class="section-label-line"></div></div>
+<div class="gallery-grid">
+  <div class="art-card" data-category="neuro-path"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">⚡</span></div><span class="card-cat">Neuropathy</span></div><div class="card-body"><div class="card-title">Nerve Fiber</div><div class="card-caption">The myelin sheath is the protective coating around nerve fibres that enables fast, accurate signal transmission throughout the nervous system.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/nerve-fiber-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/nerve-fiber-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+
+  <div class="art-card" data-category="neuro-path"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">🔬</span></div><span class="card-cat">Neuropathy</span></div><div class="card-body"><div class="card-title">Nerve Damage vs. Healthy Nerves</div><div class="card-caption">Damage to the myelin sheath from diabetes, chemotherapy, statins, and other causes disrupts nerve signaling, causing pain, numbness, and loss of function.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/nerve-damage-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/nerve-damage-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+</div>
+
+<div class="section-label" data-category="skin"><span class="section-label-text">Skin & Aging</span><div class="section-label-line"></div></div>
+<div class="gallery-grid">
+  <div class="art-card" data-category="skin"><div class="card-image"><div class="card-image-placeholder"><span class="placeholder-icon">✨</span></div><span class="card-cat">Skin & Aging</span></div><div class="card-body"><div class="card-title">Premature Aging</div><div class="card-caption">Accelerated aging at the cellular level is driven by oxidative stress, collagen breakdown, hormonal decline, and chronic inflammation — all of which are addressable.</div></div><div class="card-footer"><a class="btn-order" href="https://fineartamerica.com/featured/premature-aging-medical-educational-art-ashley-z.html" target="_blank">Order Print</a><a class="btn-preview" href="https://fineartamerica.com/featured/premature-aging-medical-educational-art-ashley-z.html" target="_blank">↗</a></div></div>
+</div>
+
+<div class="page-footer">© 2026 Root Med Health · rootmedhealth.com · Clinical Art Collection</div>
+
+<script>
+  function filterCards(category, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cards = document.querySelectorAll('.art-card');
+    const sections = document.querySelectorAll('.section-label');
+    const grids = document.querySelectorAll('.gallery-grid');
+    let count = 0;
+    if (category === 'all') {
+      cards.forEach(c => { c.style.display = ''; count++; });
+      sections.forEach(s => s.style.display = '');
+      grids.forEach(g => g.style.display = '');
+    } else {
+      cards.forEach(c => { if (c.dataset.category === category) { c.style.display = ''; count++; } else c.style.display = 'none'; });
+      sections.forEach(s => { s.style.display = s.dataset.category === category ? '' : 'none'; });
+      grids.forEach(g => { const vis = [...g.querySelectorAll('.art-card')].some(c => c.style.display !== 'none'); g.style.display = vis ? '' : 'none'; });
+    }
+    document.getElementById('visible-count').textContent = count;
+  }
+</script>
+</body>
+</html>
