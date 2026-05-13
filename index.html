@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Root Med Health — Evidence-based functional medicine personalized to you">
+<meta name="theme-color" content="#2d4a30">
+<title>Root Med Health</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="patient-mode">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo" onclick="switchTab(isProvider?'dashboard':'symptoms',null)">
+    <img src="/logo.png" class="logo-img" alt="Root Med Health"
+      onerror="this.style.display='none';document.getElementById('lf').style.display='flex'">
+    <div id="lf" class="logo-fallback">
+      <div class="logo-orb">🌿</div>
+      <div><span class="logo-text">Root Med Health</span><span class="logo-sub">Evidence-Based Wellness</span></div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="tier-badge" id="tier-badge">🌱 Basic Member</span>
+    <button onclick="openHelp()" style="padding:12px 22px;border-radius:18px;border:1.5px solid rgba(122,158,126,.35);background:transparent;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:7px;color:var(--sage-dark)" onmouseover="this.style.background='rgba(77,114,83,.08)'" onmouseout="this.style.background='transparent'">
+      <span style="font-size:17px">💬</span> Help
+    </button>
+    <div class="mode-pills">
+      <button class="mpill active" id="pill-patient" onclick="setMode('patient',this)">🌱 Patient</button>
+      <button class="mpill" id="pill-provider" onclick="setMode('provider',this)">⚕️ Provider</button>
+    </div>
+  </div>
+</div>
+
+<!-- PATIENT TABS -->
+<div class="main-tabs" id="patient-tabs">
+  <button class="mtab active" onclick="switchTab('onboard',this)">👋 Get Started</button>
+  <button class="mtab" onclick="switchTab('symptoms',this)">🌿 Symptoms</button>
+  <button class="mtab" onclick="switchTab('intake',this)">📋 Intake</button>
+  <button class="mtab" onclick="switchTab('careplan',this)">⭐ Care Plan <span class="tier-lock">Complete</span></button>
+  <button class="mtab" onclick="switchTab('tracker',this)">📊 Tracking</button>
+  <button class="mtab" onclick="switchTab('recipes',this)">🍽️ Recipes</button>
+  <button class="mtab" onclick="switchTab('supplements',this)">📚 Supplement Library</button>
+  <button class="mtab" onclick="switchTab('store',this)">💊 Supplement Store</button>
+  <button class="mtab" onclick="switchTab('wearables',this)">⌚ Wearables <span class="tier-lock">Complete</span></button>
+  <button class="mtab" onclick="switchTab('notifications',this)">🔔 Notifications</button>
+</div>
+
+<!-- PROVIDER TABS -->
+<div class="main-tabs" id="provider-tabs" style="display:none">
+  <button class="mtab active" onclick="switchTab('dashboard',this)">📊 Dashboard</button>
+  <button class="mtab" onclick="switchTab('research',this)">🔬 Condition Research</button>
+  <button class="mtab" onclick="switchTab('dietary',this)">🥗 Dietary Education</button>
+  <button class="mtab" onclick="switchTab('prov-supplements',this)">📚 Supplement Education</button>
+  <button class="mtab" onclick="switchTab('labs',this)">🧪 Lab Reference</button>
+  <button class="mtab" onclick="switchTab('protocols',this)">📋 Protocols</button>
+  <button class="mtab" onclick="switchTab('handouts',this)">📄 Handouts</button>
+  <button class="mtab" onclick="switchTab('prov-store',this)">💊 Supplement Store</button>
+  <button class="mtab" onclick="switchTab('builder',this)">🩺 Care Plan Builder</button>
+  <button class="mtab" onclick="switchTab('gallery',this)">🖼️ Art Gallery</button>
+</div>
+
+<div class="main" id="main-content">
+
+<!-- ONBOARDING -->
+<div id="v-onboard" class="view active">
+  <div class="ob-wrap">
+    <div class="step-dots">
+      <div class="sdot active" id="dot-0"></div>
+      <div class="sdot" id="dot-1"></div>
+      <div class="sdot" id="dot-2"></div>
+      <div class="sdot" id="dot-3"></div>
+    </div>
+    <div class="ob-card active" id="ob-0">
+      <span class="ob-icon">👋</span>
+      <div class="ob-title">Welcome to Root Med Health</div>
+      <div class="ob-sub">Evidence-based functional medicine — personalized to you. Select your role to get started.</div>
+      <div class="role-grid">
+        <div class="role-card" id="role-patient" onclick="selectRole('patient')">
+          <span class="role-emoji">🌱</span>
+          <div class="role-name">Patient</div>
+          <div class="role-desc">Symptom analysis, care plans, tracking, recipes and supplement education</div>
+        </div>
+        <div class="role-card" id="role-provider" onclick="selectRole('provider')">
+          <span class="role-emoji">⚕️</span>
+          <div class="role-name">Provider</div>
+          <div class="role-desc">Clinical AI, protocols, education tools, care plan builder and art gallery</div>
+        </div>
+      </div>
+      <button class="btn-primary" id="btn-ob-0" disabled onclick="obStep(1)" style="margin-top:6px">Continue →</button>
+    </div>
+    <div class="ob-card" id="ob-1">
+      <span class="ob-icon">🪪</span>
+      <div class="ob-title">Age Verification</div>
+      <div class="ob-sub">Root Med Health is for adults 18 years of age and older.</div>
+      <div class="check-row" id="age-check" onclick="toggleCheck('age')">
+        <div class="checkbox" id="cb-age"></div>
+        <div><div class="check-label">I confirm I am 18 years of age or older</div><div class="check-sub">You must be 18+ to access this platform.</div></div>
+      </div>
+      <button class="btn-primary" id="btn-ob-1" disabled onclick="obStep(2)">Continue →</button>
+      <button class="btn-back" onclick="obStep(0)">← Back</button>
+    </div>
+    <div class="ob-card" id="ob-2">
+      <span class="ob-icon">⚕️</span>
+      <div class="ob-title">Medical Disclaimer</div>
+      <div class="ob-sub">Please read and scroll to the bottom to acknowledge.</div>
+      <div class="disc-scroll" id="disc-scroll" onscroll="checkDiscScroll()">
+        <h4>Not a substitute for medical care</h4>
+        <p>Root Med Health is an educational platform only. All content, symptom analysis, lab interpretations, and supplement information are for general educational purposes and do not constitute medical advice, diagnosis, or treatment.</p>
+        <h4>Consult your healthcare provider</h4>
+        <p>Nothing on this platform replaces your primary care physician or other licensed healthcare provider. Always consult your PCP before making changes to your diet, supplements, or medications.</p>
+        <h4>AI outputs</h4>
+        <p>This platform uses artificial intelligence to generate health-related insights. AI outputs may be incorrect or incomplete and should never be acted upon without independent verification by a qualified healthcare provider.</p>
+        <h4>Supplements — Designs for Health</h4>
+        <p>Supplement recommendations are educational only. The Designs for Health store is operated by Designs for Health — purchases are subject to their terms and privacy policy. Always discuss supplement use with your healthcare provider.</p>
+        <h4>Emergency situations</h4>
+        <p>This platform is not for emergencies. If you are experiencing a medical emergency, call 911 immediately. Scroll to the bottom to acknowledge this disclaimer.</p>
+      </div>
+      <div class="check-row" id="disc-check" onclick="toggleCheck('disc')" style="pointer-events:none;opacity:.4">
+        <div class="checkbox" id="cb-disc"></div>
+        <div><div class="check-label">I have read and understand the medical disclaimer</div><div class="check-sub">I acknowledge Root Med Health is educational only.</div></div>
+      </div>
+      <button class="btn-primary" id="btn-ob-2" disabled onclick="obStep(3)" style="margin-top:6px">I Agree and Continue →</button>
+      <button class="btn-back" onclick="obStep(1)">← Back</button>
+    </div>
+    <div class="ob-card" id="ob-3">
+      <div style="text-align:center">
+        <div class="success-ring">🌿</div>
+        <div class="ob-title">You are all set</div>
+        <div style="display:inline-block;background:rgba(77,114,83,.1);color:#2d5a30;border:1px solid rgba(77,114,83,.25);border-radius:20px;padding:4px 14px;font-size:11px;font-weight:500;margin-bottom:14px" id="ob-role-badge"></div>
+        <div class="ob-sub" id="ob-success-sub"></div>
+        <button class="btn-primary" onclick="enterPlatform()">Enter Root Med Health →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SYMPTOM CHECKER -->
+<div id="v-symptoms" class="view">
+  <div class="card">
+    <div class="card-title">Symptom Checker</div>
+    <div class="card-sub">Select your symptoms or describe them — get functional medicine root cause insights and personalized support strategies.</div>
+    <div id="sym-input-area">
+      <div class="chips" id="sym-tags"></div>
+      <textarea class="inp" id="sym-text" style="margin-bottom:12px" placeholder="e.g. I have been exhausted even after 8 hours of sleep, bloated after meals, brain fog most mornings..." oninput="checkSymBtn()"></textarea>
+      <div class="grid-2">
+        <div class="fld"><label class="fld-label">Age Range</label><select class="inp" id="sym-age"><option value="">Select</option><option>18-25</option><option>26-35</option><option>36-45</option><option>46-55</option><option>56-65</option><option>65+</option></select></div>
+        <div class="fld"><label class="fld-label">Biological Sex</label><select class="inp" id="sym-sex"><option value="">Select</option><option>Female</option><option>Male</option><option>Other</option></select></div>
+        <div class="fld"><label class="fld-label">Duration</label><select class="inp" id="sym-dur"><option value="">Select</option><option>Under 2 weeks</option><option>2-4 weeks</option><option>1-3 months</option><option>3-6 months</option><option>6+ months</option><option>Years</option></select></div>
+        <div class="fld"><label class="fld-label">Key context</label><input type="text" class="inp" id="sym-ctx" placeholder="e.g. postpartum, high stress..."></div>
+      </div>
+      <button class="btn-primary" id="sym-btn" onclick="analyzeSymptoms()" disabled>🌿 Explore Root Causes</button>
+    </div>
+    <div id="sym-loading" style="display:none"></div>
+    <div id="sym-results" style="display:none"></div>
+  </div>
+  <div class="disc"><span style="font-size:13px;flex-shrink:0">⚠️</span><div class="disc-txt"><strong>Educational only</strong>Not medical advice. Always work with a qualified healthcare provider. Root Med Health · rootmedhealth.com</div></div>
+</div>
+
+<!-- INTAKE -->
+<div id="v-intake" class="view">
+  <div class="card">
+    <div class="card-title">Health Intake Questionnaire</div>
+    <div class="card-sub">Complete your health profile to power your personalized care plan. Takes about 5 minutes.</div>
+    <div class="intake-progress" id="intake-progress"></div>
+    <div id="intake-steps"></div>
+  </div>
+</div>
+
+<!-- CARE PLAN -->
+<div id="v-careplan" class="view">
+  <div class="mb-banner mb-complete">
+    <div>
+      <div class="mb-title">Complete Membership</div>
+      <div class="mb-sub">Personalized lab analysis and care plan built around your specific results.</div>
+      <div class="mb-perks"><span class="mb-perk">Lab analysis</span><span class="mb-perk">Custom care plan</span><span class="mb-perk">90-day refresh</span><span class="mb-perk">DFH supplement links</span></div>
+    </div>
+    <div style="text-align:right;flex-shrink:0">
+      <div class="mb-price">$79</div>
+      <div class="mb-period">one-time · includes 30 days free</div>
+      <span class="mb-trial">then $12.99/month or $129/year</span>
+    </div>
+  </div>
+  <div class="lock-overlay" id="careplan-lock">
+    <span class="lock-icon">🔬</span>
+    <div class="lock-title">Lab Analysis + Personalized Care Plan</div>
+    <div class="lock-sub">Upload your lab values and receive a complete functional medicine interpretation with personalized supplement recommendations linked to Designs for Health products, dietary guidance, and an implementation timeline — refreshed every 90 days.</div>
+    <button class="btn-upgrade" onclick="unlockCarePlan()">Get Lab Analysis — $79 →</button>
+  </div>
+  <div id="careplan-content" style="display:none"></div>
+  <div class="disc"><span style="font-size:13px;flex-shrink:0">⚠️</span><div class="disc-txt"><strong>Educational only</strong>Care plans are AI-generated educational content and do not constitute medical advice. Root Med Health · rootmedhealth.com</div></div>
+</div>
+
+<!-- TRACKING -->
+<div id="v-tracker" class="view">
+  <div class="date-nav">
+    <button class="date-btn" onclick="changeDay(-1)">← Prev</button>
+    <div style="text-align:center;flex:1"><div class="date-display" id="date-display"></div><span class="date-sub" id="date-sub"></span></div>
+    <button class="date-btn" onclick="changeDay(1)">Next →</button>
+  </div>
+  <div class="carb-card">
+    <div class="carb-header"><div class="carb-title">🥗 Net Carb Tracker</div><span class="carb-badge">Priority for diabetic patients</span></div>
+    <div class="carb-big">
+      <div><div class="carb-label">Net carbs today</div><div class="carb-num" id="carb-current">0</div></div>
+      <div class="carb-div">/</div>
+      <div><div class="carb-label">Daily goal</div><div class="carb-goal-num" id="carb-goal-display">50g</div></div>
+      <div id="carb-remaining-badge"></div>
+    </div>
+    <div class="carb-bar"><div class="carb-fill" id="carb-fill" style="width:0%"></div></div>
+    <div class="carb-formula">Net Carbs = Total Carbohydrates minus Dietary Fiber</div>
+    <div class="carb-breakdown">
+      <div class="cb-item"><div class="cb-val" id="cb-total">0g</div><div class="cb-lbl">Total Carbs</div></div>
+      <div class="cb-item"><div class="cb-val" id="cb-fiber">0g</div><div class="cb-lbl">Fiber</div></div>
+      <div class="cb-item"><div class="cb-val" id="cb-net">0g</div><div class="cb-lbl">Net Carbs</div></div>
+    </div>
+    <div class="goal-btns">
+      <span style="font-size:10px;color:var(--gray)">Goal:</span>
+      <button class="gbtn" onclick="setCarbGoal(20,this)">20g Keto</button>
+      <button class="gbtn active" onclick="setCarbGoal(50,this)">50g Low-carb</button>
+      <button class="gbtn" onclick="setCarbGoal(100,this)">100g Moderate</button>
+      <button class="gbtn" onclick="setCarbGoal(130,this)">130g Standard</button>
+      <input type="number" class="custom-goal" placeholder="Custom" oninput="setCarbGoal(parseInt(this.value)||50,null)">
+    </div>
+    <div class="food-log-title">Food Log</div>
+    <div class="food-add-row"><input type="text" class="food-search-inp" id="quick-food-search" placeholder="Search food database..." oninput="quickFoodSearch()"></div>
+    <div id="quick-food-results" style="display:none" class="food-dropdown"></div>
+    <div class="log-items" id="food-log-items"><div class="log-empty">No foods logged yet — search above</div></div>
+  </div>
+  <div class="section-label">Daily Metrics</div>
+  <div class="metrics-grid" id="metrics-grid"></div>
+  <div class="chart-card">
+    <div class="chart-header">
+      <div class="chart-title">📈 Weekly Progress</div>
+      <select class="chart-sel" id="chart-metric-sel" onchange="renderChart()">
+        <option value="weight">Weight</option><option value="water">Water</option>
+        <option value="netCarbs">Net Carbs</option><option value="steps">Steps</option>
+        <option value="sleep">Sleep</option><option value="glucose">Glucose</option>
+      </select>
+    </div>
+    <div style="position:relative;padding-bottom:22px"><div class="chart-bars" id="chart-bars"></div></div>
+  </div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-title" style="font-size:16px;margin-bottom:8px">📝 Daily Notes</div>
+    <textarea class="inp" id="daily-notes" style="min-height:70px" placeholder="How are you feeling today? Energy, symptoms, mood..."></textarea>
+  </div>
+  <div class="save-bar">
+    <div class="save-bar-text"><strong id="save-bar-label">Today's Log</strong><span>Save your metrics and notes</span></div>
+    <button class="btn-save" onclick="saveDay()">💾 Save Day</button>
+  </div>
+  <div class="disc"><span style="font-size:13px;flex-shrink:0">⚠️</span><div class="disc-txt"><strong>Educational only</strong>Tracking is for personal awareness, not medical monitoring. Root Med Health · rootmedhealth.com</div></div>
+</div>
+
+<!-- RECIPES -->
+<div id="v-recipes" class="view">
+  <div class="card">
+    <div class="card-title">Allergy Profile</div>
+    <div class="card-sub">Applied to all recipe recommendations — allergens are never included.</div>
+    <div class="allergy-bar" id="allergy-bar"><span style="font-size:16px;flex-shrink:0">🛡️</span><span class="af-text">Allergy-safe filtering active</span><div id="af-tags" style="display:flex;gap:4px;flex-wrap:wrap"></div></div>
+    <div class="section-label">🚨 Allergies</div><div class="chips" id="chips-allergens"></div>
+    <div class="section-label">⚠️ Intolerances</div><div class="chips" id="chips-intolerances"></div>
+    <div class="section-label">🌿 Dietary Preferences</div><div class="chips" id="chips-preferences"></div>
+    <button class="btn-primary" style="margin-top:12px" onclick="saveAllergyProfile()">✓ Save Allergy Profile</button>
+  </div>
+  <div class="card">
+    <div class="card-title">AI Recipe Library</div>
+    <div class="card-sub">Personalized allergy-safe recipes with net carbs on every recipe.</div>
+    <button class="btn-primary" id="btn-gen-recipes" onclick="generateRecipes()" style="margin-bottom:12px">✨ Generate Allergy-Safe Recipes</button>
+    <div id="recipe-loading" style="display:none"></div>
+    <div class="recipe-grid" id="recipe-grid"></div>
+    <div id="recipe-empty" style="text-align:center;padding:28px;color:var(--gray);font-size:12px"><div style="font-size:28px;margin-bottom:8px">🌿</div><div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--deep);margin-bottom:5px">No recipes yet</div>Save your allergy profile and tap Generate to create your personalized recipe library.</div>
+  </div>
+  <div class="disc"><span style="font-size:13px;flex-shrink:0">⚠️</span><div class="disc-txt"><strong>Always verify ingredients</strong>Root Med Health cannot guarantee a completely allergen-free result. Always read full ingredient labels. Root Med Health · rootmedhealth.com</div></div>
+</div>
+
+<!-- PATIENT SUPPLEMENTS -->
+<div id="v-supplements" class="view">
+  <div class="card">
+    <div class="card-title">Supplement Education Library</div>
+    <div class="card-sub">Evidence-informed supplement information — generic and form-specific. Always consult your provider before starting any supplement.</div>
+    <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" placeholder="Search supplements..." oninput="filterSupplements('patient',this.value)"></div>
+    <div class="supp-grid" id="pat-supp-grid"></div>
+    <div id="pat-supp-detail"></div>
+  </div>
+  <div class="disc"><span style="font-size:13px;flex-shrink:0">💊</span><div class="disc-txt"><strong>Educational only</strong>Shop Designs for Health via the Supplement Store tab. Always consult your provider. Root Med Health · rootmedhealth.com</div></div>
+</div>
+
+<!-- PATIENT DFH STORE -->
+<div id="v-store" class="view">
+  <div class="dfh-hero">
+    <div class="dfh-eyebrow">Root Med Health · Official Supplement Partner</div>
+    <div class="dfh-title">Designs for Health</div>
+    <div class="dfh-sub">Professional-grade, practitioner-curated supplements — available exclusively to Root Med Health members. Every product recommended in your care plan is available here.</div>
+    <div class="dfh-badges"><span class="dfh-badge">✓ Practitioner-grade quality</span><span class="dfh-badge">✓ Third-party tested</span><span class="dfh-badge">✓ GMP certified</span><span class="dfh-badge">✓ Care plan linked</span></div>
+    <div class="dfh-partner-strip"><div class="dfh-partner-logo">💊</div><div class="dfh-partner-text"><strong>Official Root Med Health Supplement Partner</strong><span>Purchase directly from your personalized care plan recommendations</span></div></div>
+  </div>
+  <div class="embed-zone">
+    <div class="embed-placeholder">
+      <span class="embed-placeholder-icon">🏪</span>
+      <div class="embed-placeholder-title">Designs for Health Store</div>
+      <div class="embed-placeholder-sub">The full Designs for Health product catalog will appear here. Your developer replaces this placeholder with the embed code provided by your DFH representative.</div>
+      <div class="embed-code-box"><div class="ecb-label">Developer — replace this with the DFH embed code</div><div class="ecb-code">&lt;!-- DFH PATIENT STORE EMBED --&gt;<br>&lt;iframe src="[DFH_EMBED_URL]"<br>&nbsp;&nbsp;width="100%" height="700"<br>&nbsp;&nbsp;frameborder="0" allow="payment"&gt;<br>&lt;/iframe&gt;</div></div>
+      <div class="embed-coming">🔔 Store launching soon — embed code from DFH pending</div>
+    </div>
+  </div>
+  <div class="disc"><span style="font-size:13px;flex-shrink:0">💊</span><div class="disc-txt"><strong>Practitioner-recommended supplements</strong>All supplements are curated through Designs for Health. Always consult your healthcare provider. Root Med Health · rootmedhealth.com</div></div>
+</div>
+
+<!-- WEARABLES -->
+<div id="v-wearables" class="view">
+  <div class="mb-banner mb-complete" style="margin-bottom:16px">
+    <div><div class="mb-title">Complete Membership Feature</div><div class="mb-sub">Connect your wearable devices for automatic daily metric sync.</div></div>
+    <div style="text-align:right;flex-shrink:0"><button class="btn-mb" onclick="unlockCarePlan()">Upgrade to Complete</button></div>
+  </div>
+  <div class="data-stream">
+    <div class="ds-title"><span class="live-dot"></span> Sample connected data — today</div>
+    <div class="ds-grid">
+      <div class="ds-item"><div class="ds-source">Steps</div><div class="ds-val">7,842</div><div class="ds-unit">steps</div><div class="ds-label">92% of goal</div><div class="ds-badge dsb-apple">Apple Watch</div></div>
+      <div class="ds-item"><div class="ds-source">Sleep</div><div class="ds-val">7.4</div><div class="ds-unit">hours</div><div class="ds-label">Deep 1.8h · REM 2.1h</div><div class="ds-badge dsb-oura">Oura Ring</div></div>
+      <div class="ds-item"><div class="ds-source">HRV</div><div class="ds-val">48</div><div class="ds-unit">ms</div><div class="ds-label">Above baseline</div><div class="ds-badge dsb-oura">Oura Ring</div></div>
+      <div class="ds-item"><div class="ds-source">Resting HR</div><div class="ds-val">62</div><div class="ds-unit">bpm</div><div class="ds-label">Optimal range</div><div class="ds-badge dsb-apple">Apple Watch</div></div>
+      <div class="ds-item"><div class="ds-source">Readiness</div><div class="ds-val">78</div><div class="ds-unit">/ 100</div><div class="ds-label">Good recovery</div><div class="ds-badge dsb-oura">Oura Ring</div></div>
+      <div class="ds-item"><div class="ds-source">Active Cal</div><div class="ds-val">486</div><div class="ds-unit">kcal</div><div class="ds-label">81% of goal</div><div class="ds-badge dsb-apple">Apple Watch</div></div>
+    </div>
+  </div>
+  <div class="section-label">Connect your devices</div>
+  <div class="wearable-grid" id="wearable-grid"></div>
+  <div class="disc" style="margin-top:14px"><span style="font-size:13px;flex-shrink:0">🔔</span><div class="disc-txt"><strong>Integration notes</strong>Oura, Garmin, and Fitbit connect via REST API. Apple Watch requires the native iOS app. WHOOP and CGM are Phase 2. Root Med Health · rootmedhealth.com</div></div>
+</div>
+
+<!-- NOTIFICATIONS -->
+<div id="v-notifications" class="view">
+  <div class="card">
+    <div class="card-title">🔔 Notification Settings</div>
+    <div class="card-sub">Enable daily check-ins — a morning quote and an evening tracking reminder.</div>
+    <div class="notif-status" id="notif-status"></div>
+    <button class="btn-primary" id="btn-enable-notif" onclick="requestNotifPermission()">Enable Notifications</button>
+  </div>
+  <div class="card">
+    <div class="card-title">🌅 Morning Encouragement</div>
+    <div class="card-sub">A daily quote delivered each morning to set a positive tone for your day.</div>
+    <div class="toggle-row"><div><div class="toggle-label">Morning notification</div><div class="toggle-sub">Inspirational quote + daily intention</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="time-row">
+      <div class="time-fld"><label>Delivery time</label><input type="time" id="morning-time" value="07:30"></div>
+      <div class="time-fld"><label>Days</label><select id="morning-days"><option>Every day</option><option>Weekdays only</option><option>Weekends only</option></select></div>
+    </div>
+    <div class="quote-preview"><div class="quote-eyebrow">🌿 Root Med Health · Morning Encouragement</div><div class="quote-text" id="morning-quote-text"></div><div class="quote-sub" id="morning-quote-sub"></div><button class="btn-new-quote" onclick="refreshQuote()">↻ New quote</button></div>
+    <button class="btn-outline" style="width:100%;margin-top:10px" onclick="sendTestMorning()">📬 Send test morning notification</button>
+  </div>
+  <div class="card">
+    <div class="card-title">🌙 Evening Tracking Reminder</div>
+    <div class="card-sub">A gentle end-of-day reminder to log your activity, water, and diet.</div>
+    <div class="toggle-row"><div><div class="toggle-label">Evening reminder</div><div class="toggle-sub">Daily tracking check-in</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="toggle-row"><div><div class="toggle-label">Include daily summary</div><div class="toggle-sub">Net carbs, water, and steps</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="toggle-row"><div><div class="toggle-label">Motivational message</div><div class="toggle-sub">Include a brief encouraging note</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    <div class="time-row"><div class="time-fld"><label>Reminder time</label><input type="time" id="evening-time" value="20:30"></div></div>
+    <button class="btn-outline" style="width:100%;margin-top:10px" onclick="sendTestEvening()">📬 Send test evening notification</button>
+  </div>
+  <div class="disc"><span style="font-size:13px;flex-shrink:0">🔔</span><div class="disc-txt"><strong>About notifications</strong>On iPhone, add Root Med Health to your Home Screen via Safari Share button for full notification support. Root Med Health · rootmedhealth.com</div></div>
+</div>
+
+<!-- PROVIDER DASHBOARD -->
+<div id="v-dashboard" class="view">
+  <div class="sub-box">
+    <div>
+      <div class="sb-title">Provider Subscription — Active</div>
+      <div class="sb-sub">Full clinical platform + complete patient access · Next billing: June 1, 2026</div>
+      <div class="sb-perks">
+        <span class="sb-perk">Clinical AI</span>
+        <span class="sb-perk">Protocol library</span>
+        <span class="sb-perk">Education suite</span>
+        <span class="sb-perk">Care plan builder</span>
+        <span class="sb-perk">Art gallery</span>
+        <span class="sb-perk">DFH store</span>
+        <span class="sb-perk">⭐ Full patient access</span>
+        <span class="sb-perk">Personal health tracking</span>
+        <span class="sb-perk">Wearables</span>
+        <span class="sb-perk">Personal care plan</span>
+      </div>
+      <div style="background:rgba(77,114,83,.08);border:1px solid rgba(77,114,83,.2);border-radius:9px;padding:11px 14px;font-size:12px;color:var(--sage-dark);margin-top:10px;line-height:1.65">
+        🌱 <strong>Dual-mode access included — at no extra cost:</strong> Switch to Patient mode anytime using the toggle above to track your own health data, run a personal symptom check, generate your own AI care plan, log your nutrition, connect your wearables, and access the full patient experience — everything in Patient Complete is included with your Provider subscription.
+      </div>
+      <div class="no-wholesale">⊘ Wholesale supplement pricing — launching when DFH integration is confirmed</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0"><div class="sb-price-val">$59<small style="font-size:13px">/mo</small></div><div class=sb-period>or $599/year · Save 15%</div></div>
+  </div>
+  <div class="dash-grid">
+    <div class="dash-stat ds-green"><span class="dash-stat-icon">👥</span><div class="dash-stat-val">—</div><div class="dash-stat-label">Active patients</div><div class="dash-stat-sub">Connect patient portal to populate</div></div>
+    <div class="dash-stat ds-gold"><span class="dash-stat-icon">📋</span><div class="dash-stat-val">—</div><div class="dash-stat-label">Care plans</div><div class="dash-stat-sub">Via patient Complete memberships</div></div>
+    <div class="dash-stat ds-blue"><span class="dash-stat-icon">🔬</span><div class="dash-stat-val">—</div><div class="dash-stat-label">Research queries</div><div class="dash-stat-sub">This month</div></div>
+    <div class="dash-stat ds-purple"><span class="dash-stat-icon">📄</span><div class="dash-stat-val">—</div><div class="dash-stat-label">Handouts generated</div><div class="dash-stat-sub">This month</div></div>
+    <div class="dash-stat ds-terra"><span class="dash-stat-icon">🖼️</span><div class="dash-stat-val" id="gallery-count">0</div><div class="dash-stat-label">Gallery images</div><div class="dash-stat-sub">Tap Gallery tab to upload</div></div>
+  </div>
+  <div class="dash-activity">
+    <div class="da-title">Quick actions</div>
+    <div class="da-item" onclick="switchProvTab('research')"><div class="da-icon">🔬</div><div class="da-text"><div class="da-main">Research a condition</div><div class="da-sub">AI-powered functional medicine insights</div></div><div class="da-arrow">→</div></div>
+    <div class="da-item" onclick="switchProvTab('builder')"><div class="da-icon">🩺</div><div class="da-text"><div class="da-main">Build a care plan</div><div class="da-sub">Modifiable care plan with DFH supplement links</div></div><div class="da-arrow">→</div></div>
+    <div class="da-item" onclick="switchProvTab('handouts')"><div class="da-icon">📄</div><div class="da-text"><div class="da-main">Generate a patient handout</div><div class="da-sub">Print-ready, plain-language education</div></div><div class="da-arrow">→</div></div>
+    <div class="da-item" onclick="switchProvTab('labs')"><div class="da-icon">🧪</div><div class="da-text"><div class="da-main">Look up a lab value</div><div class="da-sub">Conventional vs functional ranges</div></div><div class="da-arrow">→</div></div>
+    <div class="da-item" onclick="switchProvTab('protocols')"><div class="da-icon">📋</div><div class="da-text"><div class="da-main">View protocol library</div><div class="da-sub">6 IFM-informed clinical protocols</div></div><div class="da-arrow">→</div></div>
+    <div class="da-item" onclick="setMode('patient',document.getElementById('pill-patient'))"><div class="da-icon">🌱</div><div class="da-text"><div class="da-main">Switch to my patient dashboard</div><div class="da-sub">Track your health, care plan, recipes, wearables — included free</div></div><div class="da-arrow">→</div></div>
+  </div>
+  <div class="disc"><span style="font-size:13px;flex-shrink:0">⚠️</span><div class="disc-txt"><strong>Provider platform</strong>Root Med Health provides supplementary educational tools. Providers are solely responsible for all clinical decisions. Root Med Health · rootmedhealth.com</div></div>
+</div>
+
+<!-- CONDITION RESEARCH -->
+<div id="v-research" class="view">
+  <div class="card">
+    <div class="card-title">Condition Research Engine <span class="prov-tag">AI-Powered</span></div>
+    <div class="card-sub">Search any condition for evidence-informed functional medicine insights, root causes, labs, dietary protocols, and supplement considerations.</div>
+    <input type="text" class="inp" id="research-input" placeholder="e.g. Hashimoto's thyroiditis, insulin resistance, PCOS, leaky gut..." onkeydown="if(event.key==='Enter')runResearch()" oninput="checkResearchBtn()" style="margin-bottom:10px">
+    <div class="chips" id="research-chips"></div>
+    <button class="btn-primary" id="btn-research" onclick="runResearch()" disabled>🔬 Research This Condition</button>
+  </div>
+  <div id="research-results"></div>
+</div>
+
+<!-- DIETARY EDUCATION -->
+<div id="v-dietary" class="view">
+  <div class="card">
+    <div class="card-title">Dietary Education Generator <span class="prov-tag">Evidence-Based</span></div>
+    <div class="card-sub">Generate comprehensive dietary education for patients tailored to specific protocols.</div>
+    <div class="fld"><label class="fld-label">Dietary protocol</label>
+      <select class="inp" id="diet-protocol">
+        <option>Anti-Inflammatory Diet</option><option>Thyroid Support Nutrition</option>
+        <option>Blood Sugar Balance and Insulin Resistance</option><option>Gut Healing (4R Protocol)</option>
+        <option>Mediterranean Diet</option><option>Low-Histamine Diet</option>
+        <option>Elimination Diet</option><option>Ketogenic / Low-Carb Therapeutic</option>
+        <option>Adrenal Support Nutrition</option><option>Cardiovascular Protective Diet</option>
+        <option>Hormone Balancing Diet</option><option>Detox Support Diet</option>
+      </select>
+    </div>
+    <div class="grid-2">
+      <div class="fld"><label class="fld-label">Patient population (optional)</label><input type="text" class="inp" id="diet-population" placeholder="e.g. Postmenopausal women..."></div>
+      <div class="fld"><label class="fld-label">Key nutrients to emphasize</label><input type="text" class="inp" id="diet-emphasis" placeholder="e.g. Selenium, omega-3..."></div>
+    </div>
+    <button class="btn-primary" onclick="generateDietEdu()" id="btn-diet">🥗 Generate Dietary Education</button>
+    <div id="diet-output"></div>
+  </div>
+</div>
+
+<!-- PROVIDER SUPPLEMENTS -->
+<div id="v-prov-supplements" class="view">
+  <div class="card">
+    <div class="card-title">Supplement Education Library <span class="prov-tag">Clinical Reference</span></div>
+    <div class="card-sub">Full clinical reference — mechanisms, dosing, preferred forms, interactions, contraindications. All generic and form-specific. No brand names.</div>
+    <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" placeholder="Search supplements..." oninput="filterSupplements('provider',this.value)"></div>
+    <div class="supp-grid" id="prov-supp-grid"></div>
+    <div id="prov-supp-detail"></div>
+  </div>
+  <div class="disc"><span style="font-size:13px;flex-shrink:0">⚠️</span><div class="disc-txt"><strong>Generic, form-specific only</strong>Providers are responsible for all clinical supplement recommendations. Root Med Health · rootmedhealth.com</div></div>
+</div>
+
+<!-- LAB REFERENCE -->
+<div id="v-labs" class="view">
+  <div class="card">
+    <div class="card-title">Functional Lab Reference <span class="prov-tag">Functional Ranges</span></div>
+    <div class="card-sub">Conventional vs functional medicine ranges with clinical significance notes and flag guidance.</div>
+    <div style="position:relative;margin-bottom:12px"><span class="search-icon">🔍</span><input type="text" style="width:100%;padding:9px 12px 9px 32px;border:1px solid rgba(45,74,48,.8);border-radius:10px;background:rgba(15,26,18,.5);font-family:'DM Sans',sans-serif;font-size:12px;color:var(--pt);outline:none;" placeholder="Search lab markers..." oninput="filterLabs(this.value)"></div>
+    <div class="lab-grid" id="lab-grid"></div>
+  </div>
+  <div class="disc"><span style="font-size:13px;flex-shrink:0">⚠️</span><div class="disc-txt"><strong>Reference only</strong>All lab interpretation must be performed by a licensed healthcare provider. Root Med Health · rootmedhealth.com</div></div>
+</div>
+
+<!-- PROTOCOLS -->
+<div id="v-protocols" class="view">
+  <div class="card">
+    <div class="card-title">IFM-Informed Protocol Library <span class="prov-tag">Clinical Protocols</span></div>
+    <div class="card-sub">Six evidence-informed functional medicine protocols with assessment, interventions, supplements, and dietary recommendations.</div>
+    <div class="protocol-grid" id="protocol-grid"></div>
+    <div id="protocol-detail"></div>
+  </div>
+  <div class="disc"><span style="font-size:13px;flex-shrink:0">⚠️</span><div class="disc-txt"><strong>Supplementary reference</strong>Does not replace clinical judgment or evidence-based treatment guidelines. Root Med Health · rootmedhealth.com</div></div>
+</div>
+
+<!-- HANDOUT GENERATOR -->
+<div id="v-handouts" class="view">
+  <div class="card">
+    <div class="card-title">Patient Handout Generator <span class="prov-tag">Print-Ready</span></div>
+    <div class="card-sub">Generate plain-language patient education handouts on any topic — immediately printable or shareable.</div>
+    <div class="fld"><label class="fld-label">Handout type</label>
+      <select class="inp" id="handout-type">
+        <option>Dietary protocol overview</option><option>Supplement protocol with instructions</option>
+        <option>Lab results explained (patient-friendly)</option><option>Health condition explained</option>
+        <option>Lifestyle recommendations</option><option>Pre-appointment preparation guide</option>
+        <option>Post-appointment summary and next steps</option>
+      </select>
+    </div>
+    <div class="fld"><label class="fld-label">Specific topic</label><input type="text" class="inp" id="handout-topic" placeholder="e.g. Hypothyroidism and the gut-thyroid axis..." oninput="checkHandoutBtn()"></div>
+    <div class="fld"><label class="fld-label">Patient notes (optional)</label><textarea class="inp" id="handout-notes" placeholder="e.g. 52F, Hashimoto's, recently started levothyroxine..."></textarea></div>
+    <button class="btn-primary" id="btn-handout" onclick="generateHandout()" disabled>📄 Generate Patient Handout</button>
+    <div id="handout-output"></div>
+  </div>
+</div>
+
+<!-- PROVIDER DFH STORE -->
+<div id="v-prov-store" class="view">
+  <div style="background:linear-gradient(135deg,rgba(26,58,92,.8),rgba(45,74,48,.7));border-radius:14px;padding:20px;margin-bottom:14px;border:1px solid rgba(45,106,160,.35)">
+    <div style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(168,197,160,.4);margin-bottom:5px">Root Med Health · Provider Access</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--pt);margin-bottom:4px">Designs for Health — Provider Store</div>
+    <div style="font-size:11px;color:var(--pm);line-height:1.55;margin-bottom:12px">Access the full Designs for Health catalog. Products you recommend appear in patient care plans with direct purchase links.</div>
+    <div style="display:flex;gap:7px;flex-wrap:wrap">
+      <span style="font-size:9px;padding:3px 10px;border-radius:10px;background:rgba(45,106,160,.2);color:#7fb3d3;border:1px solid rgba(45,106,160,.3);font-weight:500">✓ Provider pricing</span>
+      <span style="font-size:9px;padding:3px 10px;border-radius:10px;background:rgba(77,114,83,.2);color:var(--sage-light);border:1px solid rgba(77,114,83,.3);font-weight:500">✓ Full DFH catalog</span>
+      <span style="font-size:9px;padding:3px 10px;border-radius:10px;background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.25);font-weight:500">✓ Linked to care plans</span>
+    </div>
+  </div>
+  <div class="embed-zone">
+    <div class="embed-placeholder">
+      <span class="embed-placeholder-icon">🏪</span>
+      <div class="embed-placeholder-title">Designs for Health Provider Store</div>
+      <div class="embed-placeholder-sub">The provider-facing DFH store embeds here. Developer inserts the embed code from your DFH representative — one line of code.</div>
+      <div class="embed-code-box"><div class="ecb-label">Developer — provider embed code goes here</div><div class="ecb-code">&lt;!-- DFH PROVIDER STORE EMBED --&gt;<br>&lt;iframe src="[DFH_PROVIDER_URL]"<br>&nbsp;&nbsp;width="100%" height="700"<br>&nbsp;&nbsp;frameborder="0" allow="payment"&gt;<br>&lt;/iframe&gt;</div></div>
+      <div class="embed-coming">🔔 Launching when embed code is received from DFH</div>
+    </div>
+  </div>
+  <div class="disc"><span style="font-size:13px;flex-shrink:0">💊</span><div class="disc-txt"><strong>Designs for Health provider access</strong>Products recommended in care plans are linked to this store for patient purchase. Root Med Health · rootmedhealth.com</div></div>
+</div>
+
+<!-- CARE PLAN BUILDER -->
+<div id="v-builder" class="view">
+  <div class="builder-header">
+    <div class="builder-title">🩺 Care Plan Builder</div>
+    <div class="builder-sub">Build a fully customizable care plan with supplement recommendations linked to Designs for Health products, dietary protocols, activity prescriptions, follow-up labs, and clinical notes.</div>
+  </div>
+  <div class="card" style="padding:16px">
+    <div style="font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:500;margin-bottom:10px">Patient Information</div>
+    <div class="builder-meta">
+      <div class="bm-field"><label>Patient name / ID</label><input type="text" id="cp-patient" placeholder="e.g. Jane D. or #1042"></div>
+      <div class="bm-field"><label>Date of care plan</label><input type="date" id="cp-date"></div>
+      <div class="bm-field"><label>Review date (90 days)</label><input type="date" id="cp-review"></div>
+      <div class="bm-field"><label>Primary focus</label><input type="text" id="cp-diagnosis" placeholder="e.g. Hashimoto's + insulin resistance"></div>
+      <div class="bm-field"><label>Provider name</label><input type="text" id="cp-provider" placeholder="Dr. / Provider name"></div>
+      <div class="bm-field"><label>Protocol</label>
+        <select id="cp-protocol">
+          <option>Thyroid Optimization</option><option>Blood Sugar Balance</option>
+          <option>Gut Restoration (4R)</option><option>Adrenal and HPA Axis</option>
+          <option>Cardiovascular Protection</option><option>Hormone Balance</option>
+          <option>Anti-Inflammatory</option><option>Custom</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="builder-section">
+    <div class="bs-header" onclick="toggleSection('supps')"><div class="bs-title">💊 Supplement Recommendations <span class="bs-count" id="supp-count">0 items</span></div><span class="bs-toggle open" id="toggle-supps">▼</span></div>
+    <div class="bs-body open" id="section-supps"><div id="supp-items"></div><button class="btn-add-item" onclick="addSuppItem()">+ Add supplement recommendation</button></div>
+  </div>
+  <div class="builder-section">
+    <div class="bs-header" onclick="toggleSection('diet-b')"><div class="bs-title">🥗 Dietary Recommendations <span class="bs-count" id="diet-b-count">0 items</span></div><span class="bs-toggle" id="toggle-diet-b">▼</span></div>
+    <div class="bs-body" id="section-diet-b"><div id="diet-b-items"></div><button class="btn-add-item" onclick="addDietItem()">+ Add dietary recommendation</button></div>
+  </div>
+  <div class="builder-section">
+    <div class="bs-header" onclick="toggleSection('activity')"><div class="bs-title">🏃 Activity Recommendations <span class="bs-count" id="activity-count">0 items</span></div><span class="bs-toggle" id="toggle-activity">▼</span></div>
+    <div class="bs-body" id="section-activity"><div id="activity-items"></div><button class="btn-add-item" onclick="addActivityItem()">+ Add activity recommendation</button></div>
+  </div>
+  <div class="builder-section">
+    <div class="bs-header" onclick="toggleSection('labs-b')"><div class="bs-title">🧪 Follow-Up Labs <span class="bs-count" id="labs-b-count">0 items</span></div><span class="bs-toggle" id="toggle-labs-b">▼</span></div>
+    <div class="bs-body" id="section-labs-b"><div id="labs-b-items"></div><button class="btn-add-item" onclick="addLabItem()">+ Add follow-up lab</button></div>
+  </div>
+  <div class="builder-section">
+    <div class="bs-header" onclick="toggleSection('notes-b')"><div class="bs-title">📝 Clinical Notes</div><span class="bs-toggle" id="toggle-notes-b">▼</span></div>
+    <div class="bs-body" id="section-notes-b"><textarea class="inp" id="cp-notes" style="min-height:90px" placeholder="Clinical notes, contraindications, special considerations for this patient..."></textarea></div>
+  </div>
+  <div style="display:flex;gap:8px;margin:14px 0;flex-wrap:wrap">
+    <button class="btn-primary" style="width:auto;padding:10px 20px" onclick="generatePreview()">👁 Preview Care Plan</button>
+    <button class="btn-outline" style="padding:10px 16px" onclick="window.print()">🖨️ Print</button>
+    <button class="btn-outline" style="padding:10px 14px;font-size:11px" onclick="clearBuilder()">✕ Clear All</button>
+  </div>
+  <div id="cp-preview-wrap" style="display:none"><div class="cp-preview" id="cp-preview"></div></div>
+  <div class="disc"><span style="font-size:13px;flex-shrink:0">⚠️</span><div class="disc-txt"><strong>Provider responsibility</strong>Care plans are the sole clinical responsibility of the provider. Root Med Health · rootmedhealth.com</div></div>
+</div>
+
+<!-- ART GALLERY -->
+<div id="v-gallery" class="view">
+  <div class="card">
+    <div class="card-title">Office Art Gallery <span class="prov-tag">Midjourney Upload</span></div>
+    <div class="card-sub">Upload your Midjourney-generated artwork for office display or printing. Store, organize, and download your art collection.</div>
+    <div class="gallery-upload-zone" onclick="document.getElementById('gallery-upload').click()">
+      <span style="font-size:32px;display:block;margin-bottom:10px">🖼️</span>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--pt);margin-bottom:4px">Upload artwork</div>
+      <div style="font-size:11px;color:var(--pm)">Click to select — PNG, JPG, or WEBP</div>
+      <input type="file" id="gallery-upload" accept="image/*" multiple style="display:none" onchange="handleGalleryUpload(this)">
+    </div>
+    <div id="gallery-grid" class="gallery-grid"></div>
+    <div id="gallery-empty" style="text-align:center;padding:32px;color:var(--pm);font-size:12px">
+      <div style="font-size:32px;margin-bottom:10px">🖼️</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--pt);margin-bottom:5px">No artwork yet</div>
+      Upload your first Midjourney image to get started.
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="platform-footer">
+  © 2026 Root Med Health LLC · rootmedhealth.com · Powered by Evidence-Based Wellness<br>
+  <span style="font-size:8px">Root Med Health is an educational platform only and does not provide medical advice, diagnosis, or treatment. Always consult your licensed healthcare provider.</span>
+</div>
+
+</div><!-- /main -->
+
+<div id="toast"></div>
+
+<!-- HELP / SUPPORT CHATBOT MODAL -->
+<div id="help-modal" style="display:none;position:fixed;inset:0;z-index:998;background:rgba(45,74,48,.35);backdrop-filter:blur(6px);animation:fadeIn .2s ease">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(560px,95vw);max-height:85vh;background:#fff;border-radius:20px;box-shadow:0 20px 60px rgba(45,74,48,.2);border:1px solid rgba(122,158,126,.25);display:flex;flex-direction:column;overflow:hidden">
+
+    <!-- Modal header -->
+    <div style="background:linear-gradient(135deg,#2d4a30,#4d7253);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+      <div style="display:flex;align-items:center;gap:11px">
+        <div style="width:40px;height:40px;background:rgba(255,255,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px">🌿</div>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#fff;font-weight:600">Root Med Health Support</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:1px;display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:#7ab87e;display:inline-block"></span>AI assistant · always available</div>
+        </div>
+      </div>
+      <button onclick="closeHelp()" style="background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+    </div>
+
+    <!-- Chat messages -->
+    <div id="help-messages" style="flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:12px;min-height:280px;max-height:420px;scrollbar-width:thin">
+      <!-- Welcome message injected by JS -->
+    </div>
+
+    <!-- Quick question chips -->
+    <div id="help-chips" style="padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px;border-top:1px solid rgba(212,184,150,.2);flex-shrink:0">
+      <button class="hchip" onclick="askQuick('What is included in each membership tier?')">Membership tiers</button>
+      <button class="hchip" onclick="askQuick('How do I add Root Med Health to my home screen?')">Add to home screen</button>
+      <button class="hchip" onclick="askQuick('How do I cancel my subscription?')">Cancel subscription</button>
+      <button class="hchip" onclick="askQuick('What is the free trial and how does it work?')">Free trial</button>
+      <button class="hchip" onclick="askQuick('Is Root Med Health a substitute for medical care?')">Medical disclaimer</button>
+      <button class="hchip" onclick="askQuick('How do I connect my wearable device?')">Wearables</button>
+      <button class="hchip" onclick="askQuick('What is Designs for Health and how does the supplement store work?')">Supplement store</button>
+      <button class="hchip" onclick="askQuick('How does the AI care plan work?')">Care plan</button>
+    </div>
+
+    <!-- Input -->
+    <div style="padding:12px 16px 16px;border-top:1px solid rgba(212,184,150,.2);display:flex;gap:8px;flex-shrink:0">
+      <input type="text" id="help-input" placeholder="Ask anything about Root Med Health..."
+        style="flex:1;padding:11px 14px;border:1.5px solid rgba(122,158,126,.3);border-radius:11px;font-family:'DM Sans',sans-serif;font-size:13px;color:#2d4a30;background:#faf6ef;outline:none"
+        onkeydown="if(event.key==='Enter')sendHelpMsg()"
+        onfocus="this.style.borderColor='#4d7253';this.style.background='#fff'"
+        onblur="this.style.borderColor='rgba(122,158,126,.3)';this.style.background='#faf6ef'">
+      <button onclick="sendHelpMsg()" id="help-send-btn"
+        style="padding:11px 18px;border-radius:11px;background:linear-gradient(135deg,#4d7253,#2d4a30);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .18s;white-space:nowrap">
+        Send →
+      </button>
+    </div>
+
+    <!-- Human fallback -->
+    <div style="padding:0 16px 14px;text-align:center;font-size:11px;color:#9b9189">
+      Need a human? Email <a href="mailto:support@rootmedhealth.com" style="color:#4d7253;font-weight:500">support@rootmedhealth.com</a>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.hchip{padding:5px 12px;border-radius:14px;border:1.5px solid rgba(122,158,126,.3);background:rgba(168,197,160,.08);color:#2d4a30;font-family:'DM Sans',sans-serif;font-size:11px;cursor:pointer;transition:all .14s;white-space:nowrap}
+.hchip:hover{background:rgba(77,114,83,.1);border-color:rgba(77,114,83,.4)}
+.help-msg-user{align-self:flex-end;background:linear-gradient(135deg,#4d7253,#2d4a30);color:#fff;border-radius:14px 14px 3px 14px;padding:10px 14px;font-size:13px;max-width:85%;line-height:1.5;animation:msgIn .2s ease}
+.help-msg-bot{align-self:flex-start;background:#f5faf5;border:1px solid rgba(122,158,126,.2);color:#2d4a30;border-radius:14px 14px 14px 3px;padding:10px 14px;font-size:13px;max-width:88%;line-height:1.6;animation:msgIn .2s ease}
+.help-msg-typing{align-self:flex-start;background:#f5faf5;border:1px solid rgba(122,158,126,.2);border-radius:14px 14px 14px 3px;padding:10px 16px;animation:msgIn .2s ease;display:flex;gap:5px;align-items:center}
+.typing-dot{width:7px;height:7px;border-radius:50%;background:#a8c5a0;animation:typingBounce 1.2s infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}
+.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+</style>
+
+<!-- HOME SCREEN INSTALL BANNER -->
+<div id="install-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:999;padding:14px 18px 18px;font-family:'DM Sans',sans-serif;animation:slideUp .35s ease">
+  <div style="max-width:520px;margin:0 auto;background:#fff;border-radius:18px;box-shadow:0 -2px 32px rgba(45,74,48,.18);border:1px solid rgba(122,158,126,.25);overflow:hidden">
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#2d4a30,#4d7253);padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:36px;height:36px;background:rgba(255,255,255,.15);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px">🌿</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#fff">Add to Home Screen</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.65)">rootmedhealth.com</div>
+        </div>
+      </div>
+      <button onclick="dismissBanner()" style="background:rgba(255,255,255,.15);border:none;color:#fff;width:26px;height:26px;border-radius:50%;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">✕</button>
+    </div>
+    <!-- Body -->
+    <div style="padding:14px 18px 16px">
+      <div style="font-size:12px;color:#2d4a30;font-weight:500;margin-bottom:10px" id="install-headline"></div>
+      <div id="install-steps" style="display:flex;flex-direction:column;gap:7px;margin-bottom:14px"></div>
+      <div style="display:flex;gap:8px">
+        <button id="install-btn-primary" style="flex:1;padding:10px;border-radius:10px;background:linear-gradient(135deg,#4d7253,#2d4a30);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer" onclick="triggerInstall()"></button>
+        <button onclick="dismissBanner(true)" style="padding:10px 16px;border-radius:10px;background:transparent;color:#9b9189;border:1px solid rgba(212,184,150,.4);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer">Not now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.install-step{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;background:#f5faf5;border-radius:9px;border:1px solid rgba(122,158,126,.2)}
+.install-step-num{width:22px;height:22px;border-radius:50%;background:#4d7253;color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.install-step-text{font-size:12px;color:#2d4a30;line-height:1.5}
+.install-step-text strong{display:block;font-weight:600;margin-bottom:1px}
+</style>
+
+<script src="app.js"></script>
+<script>
+(function(){
+  const DISMISSED_KEY = 'rmh_install_dismissed';
+  const DISMISSED_UNTIL = 'rmh_install_until';
+  let deferredPrompt = null;
+
+  // Detect platform
+  const ua = navigator.userAgent;
+  const isIOS = /iphone|ipad|ipod/i.test(ua);
+  const isAndroid = /android/i.test(ua);
+  const isInStandaloneMode = window.matchMedia('(display-mode:standalone)').matches || window.navigator.standalone;
+  const isMobile = isIOS || isAndroid;
+
+  // Don't show if already installed
+  if(isInStandaloneMode) return;
+
+  // Don't show if permanently dismissed
+  if(localStorage.getItem(DISMISSED_KEY) === 'true') return;
+
+  // Don't show if snoozed
+  const until = localStorage.getItem(DISMISSED_UNTIL);
+  if(until && Date.now() < parseInt(until)) return;
+
+  // Capture Android install prompt
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    showBanner('android-prompt');
+  });
+
+  function step(num, title, detail){
+    return `<div class="install-step"><div class="install-step-num">${num}</div><div class="install-step-text"><strong>${title}</strong>${detail}</div></div>`;
+  }
+
+  function showBanner(type){
+    const banner = document.getElementById('install-banner');
+    const headline = document.getElementById('install-headline');
+    const steps = document.getElementById('install-steps');
+    const btn = document.getElementById('install-btn-primary');
+
+    if(type === 'ios'){
+      headline.textContent = 'Get the full app experience on your iPhone — no App Store required.';
+      steps.innerHTML =
+        step(1,'Tap the Share button','The box with an arrow pointing up at the bottom of your Safari browser') +
+        step(2,'Scroll down and tap "Add to Home Screen"','It may be a few options down the list') +
+        step(3,'Tap "Add" in the top right corner','Root Med Health will appear on your home screen like any app');
+      btn.textContent = 'Got it';
+      btn.onclick = () => dismissBanner();
+    } else if(type === 'android-prompt'){
+      headline.textContent = 'Install Root Med Health on your Android device — instant access, no App Store needed.';
+      steps.innerHTML =
+        step(1,'Tap "Install Now" below','Chrome will add Root Med Health to your home screen') +
+        step(2,'Open from your home screen','Launches like a native app — full screen, no browser bar') +
+        step(3,'Enable notifications when prompted','Get your daily morning quote and evening tracking reminder');
+      btn.textContent = '📲 Install Now';
+      btn.onclick = triggerInstall;
+    } else if(type === 'android-manual'){
+      headline.textContent = 'Add Root Med Health to your home screen for the full app experience.';
+      steps.innerHTML =
+        step(1,'Tap the menu in your browser','Three dots in the top right corner of Chrome') +
+        step(2,'Tap "Add to Home screen"','Or "Install App" depending on your browser version') +
+        step(3,'Tap "Add" to confirm','Root Med Health will appear on your home screen');
+      btn.textContent = 'Got it';
+      btn.onclick = () => dismissBanner();
+    } else {
+      headline.textContent = 'Add Root Med Health to your desktop for quick access.';
+      steps.innerHTML =
+        step(1,'Look for the install icon','Click the install icon (⊕) in your browser address bar') +
+        step(2,'Click "Install" in the prompt','Root Med Health opens as a standalone app window') +
+        step(3,'Pin it to your taskbar','Right-click the app icon and pin for one-click access');
+      btn.textContent = 'Got it';
+      btn.onclick = () => dismissBanner();
+    }
+
+    // Show after 4 seconds on mobile, 8 seconds on desktop
+    setTimeout(() => { banner.style.display = 'block'; }, isMobile ? 4000 : 8000);
+  }
+
+  function triggerInstall(){
+    if(deferredPrompt){
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(choice => {
+        if(choice.outcome === 'accepted') localStorage.setItem(DISMISSED_KEY,'true');
+        deferredPrompt = null;
+        document.getElementById('install-banner').style.display = 'none';
+      });
+    } else {
+      dismissBanner();
+    }
+  }
+  window.triggerInstall = triggerInstall;
+
+  function dismissBanner(snooze){
+    document.getElementById('install-banner').style.display = 'none';
+    if(snooze){
+      // Snooze for 3 days
+      localStorage.setItem(DISMISSED_UNTIL, Date.now() + (3*24*60*60*1000));
+    } else {
+      localStorage.setItem(DISMISSED_KEY,'true');
+    }
+  }
+  window.dismissBanner = dismissBanner;
+
+  // Decide which banner to show
+  if(isIOS){
+    showBanner('ios');
+  } else if(isAndroid && !deferredPrompt){
+    // Show manual instructions if prompt wasn't captured
+    setTimeout(() => showBanner('android-manual'), 4000);
+  } else if(!isMobile){
+    showBanner('desktop');
+  }
+})();
+</script>
+</body>
+</html>
