@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Root Med Health — Find the Root Cause</title>
+<meta name="description" content="AI-powered functional medicine education personalized to you. Symptom analysis, personalized care plans, net carb tracking, allergy-safe recipes and more. Start your 14-day free trial.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --forest:#1e3a22;
+  --sage:#4d7253;
+  --sage-mid:#6a9470;
+  --sage-light:#a8c5a0;
+  --cream:#faf6ef;
+  --cream-dark:#f0e8d8;
+  --tan:#d4b896;
+  --gold:#c9a84c;
+  --terra:#c17f5a;
+  --white:#fff;
+  --gray:#8a7f74;
+  --text:#1e2d20;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--cream);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.4;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:16px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(250,246,239,.92);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(168,197,160,.2);
+  transition:all .3s;
+}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-logo img{height:52px;width:auto}
+.nav-logo-fallback{display:flex;align-items:center;gap:10px}
+.nav-orb{width:48px;height:48px;border-radius:11px;background:linear-gradient(135deg,#5a8f5e,#1e3a22);display:flex;align-items:center;justify-content:center;font-size:22px}
+.nav-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--forest)}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-link{font-size:13px;color:var(--sage);font-weight:500;text-decoration:none;transition:color .18s}
+.nav-link:hover{color:var(--forest)}
+.nav-cta{
+  padding:10px 22px;border-radius:50px;
+  background:linear-gradient(135deg,var(--sage),var(--forest));
+  color:#fff;font-size:13px;font-weight:500;
+  text-decoration:none;transition:all .2s;
+  box-shadow:0 3px 14px rgba(45,74,48,.25);
+}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(45,74,48,.35)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding:120px 40px 80px;
+  position:relative;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(168,197,160,.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 20% 80%, rgba(212,184,150,.15) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 85% 10%, rgba(201,168,76,.08) 0%, transparent 50%);
+}
+.hero-botanical{
+  position:absolute;right:-60px;top:50%;transform:translateY(-50%);
+  width:520px;height:520px;
+  background:radial-gradient(circle,rgba(168,197,160,.14) 0%,transparent 70%);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:260px;opacity:.18;
+  user-select:none;pointer-events:none;
+}
+.hero-content{position:relative;z-index:1;max-width:680px}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--sage);font-weight:500;
+  background:rgba(77,114,83,.08);
+  border:1px solid rgba(77,114,83,.2);
+  border-radius:50px;padding:6px 16px;
+  margin-bottom:28px;
+  animation:fadeUp .6s ease both;
+}
+.hero-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(42px,6vw,72px);
+  font-weight:500;
+  line-height:1.1;
+  color:var(--forest);
+  margin-bottom:12px;
+  animation:fadeUp .6s .1s ease both;
+}
+.hero-headline em{
+  font-style:italic;
+  color:var(--sage);
+}
+.hero-sub{
+  font-size:18px;
+  color:var(--gray);
+  line-height:1.7;
+  margin-bottom:36px;
+  max-width:520px;
+  font-weight:300;
+  animation:fadeUp .6s .2s ease both;
+}
+.hero-sub strong{color:var(--text);font-weight:500}
+.hero-actions{
+  display:flex;align-items:center;gap:16px;
+  flex-wrap:wrap;
+  animation:fadeUp .6s .3s ease both;
+  margin-bottom:48px;
+}
+.btn-hero{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:16px 32px;border-radius:50px;
+  background:linear-gradient(135deg,var(--sage),var(--forest));
+  color:#fff;font-size:15px;font-weight:500;
+  text-decoration:none;transition:all .22s;
+  box-shadow:0 6px 24px rgba(45,74,48,.3);
+  font-family:'DM Sans',sans-serif;
+}
+.btn-hero:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(45,74,48,.4)}
+.btn-hero-outline{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:16px 28px;border-radius:50px;
+  border:1.5px solid rgba(77,114,83,.35);
+  color:var(--sage);font-size:15px;font-weight:500;
+  text-decoration:none;transition:all .18s;
+  font-family:'DM Sans',sans-serif;
+  background:transparent;
+}
+.btn-hero-outline:hover{background:rgba(77,114,83,.06);border-color:var(--sage)}
+.hero-trial-note{
+  font-size:12px;color:var(--gray);
+  display:flex;align-items:center;gap:6px;
+}
+.hero-trial-note::before{content:'✓';color:var(--sage);font-weight:600}
+
+/* ── SOCIAL PROOF STRIP ── */
+.proof-strip{
+  display:flex;align-items:center;gap:16px;
+  flex-wrap:wrap;
+  row-gap:10px;
+  animation:fadeUp .6s .4s ease both;
+  max-width:640px;
+}
+.proof-item{
+  display:flex;align-items:center;gap:7px;
+  font-size:12px;color:var(--gray);font-weight:400;
+  white-space:nowrap;
+}
+.proof-icon{font-size:15px}
+.proof-divider{width:1px;height:14px;background:rgba(168,197,160,.4);flex-shrink:0}
+
+/* ── PAIN POINTS ── */
+.pain-section{
+  padding:80px 40px;
+  background:var(--forest);
+  position:relative;overflow:hidden;
+}
+.pain-section::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 80% at 30% 50%,rgba(168,197,160,.06) 0%,transparent 60%);
+}
+.pain-inner{max-width:1000px;margin:0 auto;position:relative;z-index:1}
+.pain-label{
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--sage-light);font-weight:500;margin-bottom:16px;
+  opacity:.7;
+}
+.pain-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(32px,4vw,48px);
+  font-weight:400;
+  color:#fff;
+  line-height:1.2;
+  margin-bottom:40px;
+  max-width:600px;
+}
+.pain-headline em{font-style:italic;color:var(--sage-light)}
+.pain-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;
+}
+.pain-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(168,197,160,.12);
+  border-radius:16px;padding:22px;
+  transition:all .2s;
+}
+.pain-card:hover{background:rgba(255,255,255,.07);border-color:rgba(168,197,160,.25);transform:translateY(-2px)}
+.pain-emoji{font-size:28px;margin-bottom:12px;display:block}
+.pain-title{font-size:15px;font-weight:500;color:#fff;margin-bottom:6px}
+.pain-desc{font-size:13px;color:rgba(255,255,255,.5);line-height:1.6}
+
+/* ── SOLUTION / FEATURES ── */
+.features-section{
+  padding:100px 40px;
+  position:relative;
+}
+.features-inner{max-width:1100px;margin:0 auto}
+.section-eyebrow{
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--sage);font-weight:500;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.section-eyebrow::before{content:'';display:block;width:24px;height:1.5px;background:var(--sage)}
+.section-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(32px,4vw,52px);
+  font-weight:500;
+  color:var(--forest);
+  line-height:1.15;
+  margin-bottom:60px;
+  max-width:600px;
+}
+.section-headline em{font-style:italic;color:var(--sage)}
+.features-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:20px;
+}
+.feature-card{
+  background:var(--white);
+  border-radius:20px;
+  padding:28px;
+  border:1px solid rgba(212,184,150,.25);
+  box-shadow:0 4px 20px rgba(45,74,48,.06);
+  transition:all .22s;
+  position:relative;overflow:hidden;
+}
+.feature-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  border-radius:20px 20px 0 0;
+}
+.fc-green::before{background:linear-gradient(90deg,#4d7253,#7ab87e)}
+.fc-gold::before{background:linear-gradient(90deg,#c9a84c,#e8c96a)}
+.fc-terra::before{background:linear-gradient(90deg,#c17f5a,#e8b89a)}
+.fc-blue::before{background:linear-gradient(90deg,#2980b9,#7fb3d3)}
+.fc-purple::before{background:linear-gradient(90deg,#8e44ad,#b07ad4)}
+.fc-sage::before{background:linear-gradient(90deg,#2d4a30,#4d7253)}
+.feature-card:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(45,74,48,.12)}
+.feature-icon{
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;margin-bottom:16px;
+}
+.fi-green{background:rgba(77,114,83,.1)}
+.fi-gold{background:rgba(201,168,76,.1)}
+.fi-terra{background:rgba(193,127,90,.1)}
+.fi-blue{background:rgba(41,128,185,.1)}
+.fi-purple{background:rgba(142,68,173,.1)}
+.fi-sage{background:rgba(45,74,48,.08)}
+.feature-title{font-size:17px;font-weight:600;color:var(--forest);margin-bottom:8px;font-family:'Cormorant Garamond',serif}
+.feature-desc{font-size:13px;color:var(--gray);line-height:1.65}
+.feature-badge{
+  display:inline-block;margin-top:12px;
+  font-size:10px;padding:2px 9px;border-radius:6px;
+  background:rgba(201,168,76,.12);color:#8a6020;
+  border:1px solid rgba(201,168,76,.25);font-weight:500;
+}
+
+/* ── PRICING ── */
+.pricing-section{
+  padding:100px 40px;
+  background:linear-gradient(180deg,var(--cream) 0%,rgba(212,184,150,.12) 100%);
+  position:relative;
+}
+.pricing-inner{max-width:900px;margin:0 auto;text-align:center}
+.pricing-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:20px;margin-top:50px;text-align:left;
+}
+.pricing-card{
+  background:var(--white);
+  border-radius:24px;padding:32px;
+  border:1px solid rgba(212,184,150,.3);
+  box-shadow:0 4px 20px rgba(45,74,48,.07);
+  transition:all .22s;position:relative;
+}
+.pricing-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(45,74,48,.13)}
+.pricing-card.featured{
+  background:linear-gradient(160deg,var(--forest) 0%,#2d5c34 100%);
+  border-color:transparent;
+  box-shadow:0 8px 36px rgba(30,58,34,.35);
+}
+.pricing-featured-badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--gold),#e8c96a);
+  color:#2a1f08;font-size:10px;font-weight:600;
+  padding:4px 16px;border-radius:50px;
+  white-space:nowrap;
+  box-shadow:0 3px 12px rgba(201,168,76,.4);
+}
+.pricing-tier{font-size:11px;text-transform:uppercase;letter-spacing:.18em;font-weight:500;margin-bottom:10px}
+.pricing-card:not(.featured) .pricing-tier{color:var(--sage)}
+.pricing-card.featured .pricing-tier{color:rgba(168,197,160,.6)}
+.pricing-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;margin-bottom:18px}
+.pricing-card:not(.featured) .pricing-name{color:var(--forest)}
+.pricing-card.featured .pricing-name{color:#fff}
+.pricing-price{display:flex;align-items:baseline;gap:4px;margin-bottom:6px}
+.price-amount{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300}
+.pricing-card:not(.featured) .price-amount{color:var(--forest)}
+.pricing-card.featured .price-amount{color:#fff}
+.price-period{font-size:14px}
+.pricing-card:not(.featured) .price-period{color:var(--gray)}
+.pricing-card.featured .price-period{color:rgba(255,255,255,.5)}
+.pricing-annual{font-size:12px;margin-bottom:20px}
+.pricing-card:not(.featured) .pricing-annual{color:var(--sage)}
+.pricing-card.featured .pricing-annual{color:var(--sage-light)}
+.pricing-trial{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:500;
+  padding:5px 12px;border-radius:50px;margin-bottom:22px;
+}
+.pricing-card:not(.featured) .pricing-trial{background:rgba(77,114,83,.08);color:var(--sage);border:1px solid rgba(77,114,83,.2)}
+.pricing-card.featured .pricing-trial{background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.25)}
+.pricing-divider{height:1px;margin-bottom:20px}
+.pricing-card:not(.featured) .pricing-divider{background:rgba(212,184,150,.3)}
+.pricing-card.featured .pricing-divider{background:rgba(255,255,255,.1)}
+.pricing-features{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.pf-item{display:flex;align-items:flex-start;gap:10px;font-size:13px}
+.pf-check{flex-shrink:0;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;margin-top:1px}
+.pricing-card:not(.featured) .pf-check{background:rgba(77,114,83,.1);color:var(--sage)}
+.pricing-card.featured .pf-check{background:rgba(168,197,160,.2);color:var(--sage-light)}
+.pf-text{}
+.pricing-card:not(.featured) .pf-text{color:#3d4f3e}
+.pricing-card.featured .pf-text{color:rgba(255,255,255,.8)}
+.btn-pricing{
+  display:block;width:100%;padding:14px;border-radius:14px;
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;
+  text-align:center;text-decoration:none;cursor:pointer;
+  border:none;transition:all .2s;
+}
+.pricing-card:not(.featured) .btn-pricing{
+  background:linear-gradient(135deg,var(--sage),var(--forest));
+  color:#fff;box-shadow:0 4px 14px rgba(45,74,48,.25);
+}
+.pricing-card:not(.featured) .btn-pricing:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(45,74,48,.35)}
+.pricing-card.featured .btn-pricing{
+  background:linear-gradient(135deg,var(--gold),#b8942a);
+  color:#2a1f08;box-shadow:0 4px 14px rgba(201,168,76,.4);
+}
+.pricing-card.featured .btn-pricing:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(201,168,76,.5)}
+.pricing-note{font-size:12px;text-align:center;margin-top:16px}
+.pricing-card:not(.featured) .pricing-note{color:var(--gray)}
+.pricing-card.featured .pricing-note{color:rgba(255,255,255,.35)}
+.coupon-banner{
+  margin-top:32px;
+  background:rgba(201,168,76,.08);
+  border:1px solid rgba(201,168,76,.25);
+  border-radius:14px;padding:16px 20px;
+  display:flex;align-items:center;gap:14px;
+  flex-wrap:wrap;
+}
+.coupon-icon{font-size:22px;flex-shrink:0}
+.coupon-text strong{display:block;font-size:14px;color:var(--forest);margin-bottom:2px}
+.coupon-text span{font-size:12px;color:var(--gray)}
+.coupon-code{
+  margin-left:auto;background:var(--white);
+  border:1.5px dashed rgba(201,168,76,.5);
+  border-radius:9px;padding:7px 16px;
+  font-family:'Courier New',monospace;font-size:14px;
+  font-weight:700;color:#8a6020;letter-spacing:.1em;
+  cursor:pointer;transition:all .15s;
+  white-space:nowrap;
+}
+.coupon-code:hover{background:rgba(201,168,76,.08)}
+
+/* ── HOW IT WORKS ── */
+.how-section{
+  padding:100px 40px;
+  background:var(--white);
+}
+.how-inner{max-width:900px;margin:0 auto}
+.how-steps{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:32px;margin-top:50px;position:relative;
+}
+.how-steps::before{
+  content:'';position:absolute;
+  top:28px;left:calc(16.67% + 20px);right:calc(16.67% + 20px);
+  height:1.5px;background:linear-gradient(90deg,rgba(168,197,160,.5),rgba(168,197,160,.5));
+  z-index:0;
+}
+.how-step{text-align:center;position:relative;z-index:1}
+.how-num{
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,var(--sage),var(--forest));
+  color:#fff;font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 18px;
+  box-shadow:0 4px 16px rgba(45,74,48,.25);
+}
+.how-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:var(--forest);margin-bottom:8px}
+.how-desc{font-size:13px;color:var(--gray);line-height:1.65}
+
+/* ── DISCLAIMER STRIP ── */
+.disclaimer-strip{
+  padding:28px 40px;
+  background:rgba(212,184,150,.15);
+  border-top:1px solid rgba(212,184,150,.3);
+  border-bottom:1px solid rgba(212,184,150,.3);
+}
+.disclaimer-inner{
+  max-width:900px;margin:0 auto;
+  display:flex;align-items:flex-start;gap:14px;
+}
+.disclaimer-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.disclaimer-text{font-size:12px;color:var(--gray);line-height:1.7}
+.disclaimer-text strong{color:var(--text);font-weight:500}
+
+/* ── FINAL CTA ── */
+.cta-section{
+  padding:100px 40px;
+  background:linear-gradient(160deg,var(--forest) 0%,#1a4a20 100%);
+  position:relative;overflow:hidden;text-align:center;
+}
+.cta-section::before{
+  content:'';position:absolute;
+  top:-200px;left:50%;transform:translateX(-50%);
+  width:800px;height:800px;border-radius:50%;
+  background:radial-gradient(circle,rgba(168,197,160,.08) 0%,transparent 70%);
+}
+.cta-inner{max-width:600px;margin:0 auto;position:relative;z-index:1}
+.cta-eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sage-light);font-weight:500;margin-bottom:20px;opacity:.7}
+.cta-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(36px,5vw,58px);
+  font-weight:400;color:#fff;
+  line-height:1.15;margin-bottom:16px;
+}
+.cta-headline em{font-style:italic;color:var(--sage-light)}
+.cta-sub{font-size:16px;color:rgba(255,255,255,.55);line-height:1.65;margin-bottom:40px;font-weight:300}
+.btn-cta-main{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:18px 40px;border-radius:50px;
+  background:linear-gradient(135deg,#7ab87e,#4d7253);
+  color:#fff;font-size:16px;font-weight:500;
+  text-decoration:none;transition:all .22s;
+  box-shadow:0 8px 28px rgba(122,184,126,.3);
+  font-family:'DM Sans',sans-serif;margin-bottom:16px;
+}
+.btn-cta-main:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(122,184,126,.45)}
+.cta-note{font-size:12px;color:rgba(255,255,255,.35)}
+.cta-note span{color:rgba(168,197,160,.6)}
+
+/* ── FOOTER ── */
+footer{
+  padding:32px 40px;
+  background:var(--forest);
+  border-top:1px solid rgba(168,197,160,.1);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
+}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(255,255,255,.4)}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap}
+.footer-link{font-size:12px;color:rgba(255,255,255,.3);text-decoration:none;transition:color .15s}
+.footer-link:hover{color:rgba(168,197,160,.7)}
+.footer-disc{font-size:10px;color:rgba(255,255,255,.2);text-align:center;width:100%;line-height:1.6}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  nav{padding:14px 20px}
+  .nav-link{display:none}
+  .hero{padding:100px 24px 60px}
+  .hero-botanical{display:none}
+  .pain-section,.features-section,.pricing-section,.how-section,.cta-section{padding:60px 24px}
+  .pricing-grid{grid-template-columns:1fr}
+  .how-steps{grid-template-columns:1fr;gap:24px}
+  .how-steps::before{display:none}
+  footer{padding:24px 20px;flex-direction:column;text-align:center}
+  .coupon-code{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://rootmedhealth.com" class="nav-logo">
+    <img src="https://rootmedhealth.com/logo.png" alt="Root Med Health" onerror="this.style.display='none';document.querySelector('.nav-logo-fallback').style.display='flex'">
+    <div class="nav-logo-fallback" style="display:none">
+      <div class="nav-orb">🌿</div>
+      <span class="nav-name">Root Med Health</span>
+    </div>
+  </a>
+  <div class="nav-right">
+    <a href="#features" class="nav-link">Features</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="https://rootmedhealth.com" class="nav-cta">Start Free Trial →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-botanical">🌿</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">🌱 Functional Medicine · Personalized to You</div>
+    <h1 class="hero-headline">
+      Your symptoms<br>have a <em>root cause.</em><br>Let's find it.
+    </h1>
+    <p class="hero-sub">
+      Root Med Health uses AI to bring <strong>functional medicine education</strong> directly to you — symptom analysis, personalized care plans, nutrition tracking, and supplement guidance. No waiting rooms. No referrals. Start today.
+    </p>
+    <div class="hero-actions">
+      <a href="https://rootmedhealth.com" class="btn-hero">
+        🌿 Start My Free Trial
+      </a>
+      <a href="#features" class="btn-hero-outline">
+        See what's included →
+      </a>
+    </div>
+    <div class="hero-trial-note">14-day free trial · No credit card required · Cancel anytime</div>
+    <br>
+    <div class="proof-strip">
+      <div class="proof-item"><span class="proof-icon">🤖</span> AI symptom analysis</div>
+      <div class="proof-divider"></div>
+      <div class="proof-item"><span class="proof-icon">🔬</span> Lab value interpretation</div>
+      <div class="proof-divider"></div>
+      <div class="proof-item"><span class="proof-icon">⭐</span> Personalized care plan</div>
+      <div class="proof-divider"></div>
+      <div class="proof-item"><span class="proof-icon">📋</span> 5-step health intake</div>
+      <div class="proof-divider"></div>
+      <div class="proof-item"><span class="proof-icon">🥗</span> Net carb tracker</div>
+      <div class="proof-divider"></div>
+      <div class="proof-item"><span class="proof-icon">📊</span> Daily health metrics</div>
+      <div class="proof-divider"></div>
+      <div class="proof-item"><span class="proof-icon">🍽️</span> Allergy-safe recipes</div>
+      <div class="proof-divider"></div>
+      <div class="proof-item"><span class="proof-icon">📚</span> Supplement education</div>
+      <div class="proof-divider"></div>
+      <div class="proof-item"><span class="proof-icon">💊</span> Designs for Health store</div>
+      <div class="proof-divider"></div>
+      <div class="proof-item"><span class="proof-icon">⌚</span> Wearable device sync</div>
+      <div class="proof-divider"></div>
+      <div class="proof-item"><span class="proof-icon">🔔</span> Daily encouragement</div>
+      <div class="proof-divider"></div>
+      <div class="proof-item"><span class="proof-icon">📱</span> Works on any device</div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN POINTS -->
+<section class="pain-section">
+  <div class="pain-inner">
+    <div class="pain-label reveal">Sound familiar?</div>
+    <h2 class="pain-headline reveal">
+      Tired of being told<br><em>everything looks normal</em><br>when you feel anything but?
+    </h2>
+    <div class="pain-grid">
+      <div class="pain-card reveal">
+        <span class="pain-emoji">😴</span>
+        <div class="pain-title">Exhausted no matter how much you sleep</div>
+        <div class="pain-desc">Your labs come back "normal" but you're running on empty every single day.</div>
+      </div>
+      <div class="pain-card reveal">
+        <span class="pain-emoji">🧠</span>
+        <div class="pain-title">Brain fog that won't lift</div>
+        <div class="pain-desc">Difficulty concentrating, forgetfulness, and mental sluggishness that nobody can explain.</div>
+      </div>
+      <div class="pain-card reveal">
+        <span class="pain-emoji">🤷</span>
+        <div class="pain-title">Bloating, gut issues, food reactions</div>
+        <div class="pain-desc">You've eliminated foods, tried diets, and still can't figure out what your body needs.</div>
+      </div>
+      <div class="pain-card reveal">
+        <span class="pain-emoji">⚖️</span>
+        <div class="pain-title">Weight that won't budge</div>
+        <div class="pain-desc">Doing everything right but your body isn't responding. There may be a deeper reason.</div>
+      </div>
+      <div class="pain-card reveal">
+        <span class="pain-emoji">😟</span>
+        <div class="pain-title">Hormones, mood, and anxiety</div>
+        <div class="pain-desc">Feeling off — emotionally and physically — without clear answers from conventional medicine.</div>
+      </div>
+      <div class="pain-card reveal">
+        <span class="pain-emoji">💊</span>
+        <div class="pain-title">Supplement confusion</div>
+        <div class="pain-desc">Overwhelmed by options, unsure what you actually need, and spending money on things that may not help.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div class="features-inner">
+    <div class="section-eyebrow reveal">What Root Med Health includes</div>
+    <h2 class="section-headline reveal">
+      Everything you need to<br><em>understand your health</em><br>from the root up.
+    </h2>
+    <div class="features-grid">
+      <div class="feature-card fc-green reveal">
+        <div class="feature-icon fi-green">🌿</div>
+        <div class="feature-title">AI Symptom Checker</div>
+        <div class="feature-desc">Describe your symptoms and receive a functional medicine root cause analysis — covering nutrition, lifestyle, labs, and mind-body considerations. Educational insights in seconds.</div>
+      </div>
+      <div class="feature-card fc-gold reveal">
+        <div class="feature-icon fi-gold">🔬</div>
+        <div class="feature-title">Personalized Care Plan</div>
+        <div class="feature-desc">Enter your lab values and receive a complete AI-generated functional medicine care plan — supplement recommendations linked to Designs for Health, dietary guidance, and a 90-day timeline.</div>
+        <span class="feature-badge">⭐ Complete tier</span>
+      </div>
+      <div class="feature-card fc-terra reveal">
+        <div class="feature-icon fi-terra">🥗</div>
+        <div class="feature-title">Net Carb Tracker</div>
+        <div class="feature-desc">Log your food from a built-in database, track net carbs (total carbs minus fiber), set your daily goal, and chart your weekly progress. Priority tool for blood sugar management.</div>
+      </div>
+      <div class="feature-card fc-green reveal">
+        <div class="feature-icon fi-green">🍽️</div>
+        <div class="feature-title">Allergy-Safe Recipe Library</div>
+        <div class="feature-desc">Set your allergy profile — allergens, intolerances, and dietary preferences — and get AI-generated recipes that are guaranteed safe for your profile, with net carbs on every recipe.</div>
+      </div>
+      <div class="feature-card fc-blue reveal">
+        <div class="feature-icon fi-blue">📚</div>
+        <div class="feature-title">Supplement Education Library</div>
+        <div class="feature-desc">Evidence-informed reference for 10 key supplements — dosing, timing, preferred forms, interactions, and contraindications. Generic and form-specific. Shop Designs for Health direct.</div>
+      </div>
+      <div class="feature-card fc-purple reveal">
+        <div class="feature-icon fi-purple">⌚</div>
+        <div class="feature-title">Wearable Integration</div>
+        <div class="feature-desc">Connect your Oura Ring, Garmin, Fitbit, or Apple Watch and automatically sync your daily metrics — steps, sleep, HRV, readiness, and more — into your health dashboard.</div>
+        <span class="feature-badge">⭐ Complete tier</span>
+      </div>
+      <div class="feature-card fc-sage reveal">
+        <div class="feature-icon fi-sage">📊</div>
+        <div class="feature-title">Daily Health Tracking</div>
+        <div class="feature-desc">Track weight, water intake, blood glucose, steps, sleep, mood, and exercise with visual progress bars and a weekly chart. Daily notes for symptoms and observations.</div>
+      </div>
+      <div class="feature-card fc-gold reveal">
+        <div class="feature-icon fi-gold">🔔</div>
+        <div class="feature-title">Daily Encouragement</div>
+        <div class="feature-desc">Optional morning inspiration and an evening tracking reminder delivered via push notification. 15 rotating functional medicine wellness quotes to start your day grounded.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="how-inner">
+    <div class="section-eyebrow reveal">Getting started</div>
+    <h2 class="section-headline reveal">Up and running<br>in <em>three steps.</em></h2>
+    <div class="how-steps">
+      <div class="how-step reveal">
+        <div class="how-num">1</div>
+        <div class="how-title">Create your account</div>
+        <div class="how-desc">Sign up at rootmedhealth.com — no app download required. Start your 14-day free trial instantly, no credit card needed.</div>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-num">2</div>
+        <div class="how-title">Complete your intake</div>
+        <div class="how-desc">A five-minute health questionnaire captures your health profile, symptoms, goals, and optional lab values to personalize your experience.</div>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-num">3</div>
+        <div class="how-title">Explore your health</div>
+        <div class="how-desc">Run a symptom check, start tracking, generate recipes, or upgrade to Complete for your personalized AI care plan and lab analysis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-inner">
+    <div class="section-eyebrow reveal" style="justify-content:center">Simple, transparent pricing</div>
+    <h2 class="section-headline reveal" style="margin:0 auto 0;text-align:center;max-width:500px">
+      Start free.<br>Upgrade when <em>you're ready.</em>
+    </h2>
+    <div class="pricing-grid reveal">
+
+      <!-- Basic -->
+      <div class="pricing-card">
+        <div class="pricing-tier">Patient Basic</div>
+        <div class="pricing-name">Foundation</div>
+        <div class="pricing-price">
+          <span class="price-amount">$7.99</span>
+          <span class="price-period">/month</span>
+        </div>
+        <div class="pricing-annual">or $79/year — save 18%</div>
+        <div class="pricing-trial">✓ 14-day free trial</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-features">
+          <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text">AI Symptom Checker</div></div>
+          <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text">Net Carb Tracker + food database</div></div>
+          <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text">Daily health metrics tracking</div></div>
+          <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text">Allergy-safe AI recipe library</div></div>
+          <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text">Supplement education library</div></div>
+          <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text">Designs for Health supplement store</div></div>
+          <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text">Morning + evening notifications</div></div>
+        </div>
+        <a href="https://rootmedhealth.com" class="btn-pricing">Start Free Trial →</a>
+        <div class="pricing-note">No credit card required</div>
+      </div>
+
+      <!-- Complete -->
+      <div class="pricing-card featured">
+        <div class="pricing-featured-badge">⭐ Most Popular</div>
+        <div class="pricing-tier">Patient Complete</div>
+        <div class="pricing-name">Full Program</div>
+        <div class="pricing-price">
+          <span class="price-amount">$79</span>
+          <span class="price-period">one-time lab analysis</span>
+        </div>
+        <div class="pricing-annual" style="color:rgba(168,197,160,.7)">then $12.99/month or $129/year</div>
+        <div class="pricing-trial">⭐ 30-day free trial included</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-features">
+          <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text">Everything in Basic</div></div>
+          <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text">AI-powered personalized care plan</div></div>
+          <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text">Lab value analysis + interpretation</div></div>
+          <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text">DFH supplement recommendations in care plan</div></div>
+          <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text">90-day care plan refresh</div></div>
+          <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text">Wearable device integration</div></div>
+          <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text">Automatic daily metric sync</div></div>
+        </div>
+        <a href="https://rootmedhealth.com" class="btn-pricing">Get Complete →</a>
+        <div class="pricing-note">Cancel or downgrade anytime</div>
+      </div>
+
+    </div>
+
+    <!-- Coupon banner -->
+    <div class="coupon-banner reveal">
+      <span class="coupon-icon">🎁</span>
+      <div class="coupon-text">
+        <strong>Introductory offer — 3 months free</strong>
+        <span>Use code at checkout for 100% off your first 3 months on any membership</span>
+      </div>
+      <div class="coupon-code" onclick="navigator.clipboard?.writeText('ROOTWELCOME3');this.textContent='✓ Copied!';setTimeout(()=>this.textContent='ROOTWELCOME3',2000)" title="Click to copy">ROOTWELCOME3</div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer-strip">
+  <div class="disclaimer-inner">
+    <span class="disclaimer-icon">⚕️</span>
+    <div class="disclaimer-text">
+      <strong>Educational platform only.</strong> Root Med Health provides AI-powered functional medicine educational content and is not a substitute for medical advice, diagnosis, or treatment. Always consult your licensed healthcare provider before making changes to your diet, supplements, or medications. Root Med Health LLC · rootmedhealth.com
+    </div>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-eyebrow">Start today — free for 14 days</div>
+    <h2 class="cta-headline">
+      Your health has<br>a <em>root cause.</em><br>Find it.
+    </h2>
+    <p class="cta-sub">Join Root Med Health and start understanding your body through the lens of functional medicine — personalized, evidence-informed, and available right now.</p>
+    <a href="https://rootmedhealth.com" class="btn-cta-main">🌿 Start My Free Trial</a>
+    <div class="cta-note">
+      14-day free trial · <span>No credit card required</span> · Cancel anytime
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">© 2026 Root Med Health LLC · rootmedhealth.com</div>
+  <div class="footer-links">
+    <a href="https://rootmedhealth.com" class="footer-link">Platform</a>
+    <a href="https://rootmedhealth.com/provider" class="footer-link">For Providers</a>
+    <a href="mailto:support@rootmedhealth.com" class="footer-link">support@rootmedhealth.com</a>
+  </div>
+  <div class="footer-disc">Root Med Health is an educational platform only and does not provide medical advice, diagnosis, or treatment. All AI-generated content is for educational purposes only. Always consult your licensed healthcare provider. · Powered by Evidence-Based Wellness</div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Sticky nav shadow
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.boxShadow =
+    window.scrollY > 20 ? '0 2px 20px rgba(45,74,48,.1)' : 'none';
+});
+</script>
+</body>
+</html>
