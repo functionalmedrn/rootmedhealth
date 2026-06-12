@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Root Med Health — For Healthcare Providers</title>
+<meta name="description" content="A complete functional medicine clinical suite for licensed providers. AI condition research, protocol library, protocol builder, patient handouts, and a Designs for Health supplement store — plus full patient access included free. $59/month.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --forest:#1e3a22;
+  --sage:#4d7253;
+  --sage-light:#a8c5a0;
+  --sage-dark:#2d4a30;
+  --cream:#faf6ef;
+  --tan:#d4b896;
+  --gold:#c9a84c;
+  --terra:#c17f5a;
+  --white:#fff;
+  --gray:#8a7f74;
+  --text:#1e2d20;
+  --navy:#1a3a5c;
+  --navy-light:#2d6aa0;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,246,239,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(168,197,160,.2);transition:all .3s}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-logo img{height:52px;width:auto}
+.nav-logo-fallback{display:flex;align-items:center;gap:10px}
+.nav-orb{width:48px;height:48px;border-radius:11px;background:linear-gradient(135deg,#5a8f5e,#1e3a22);display:flex;align-items:center;justify-content:center;font-size:22px}
+.nav-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--forest)}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-link{font-size:13px;color:var(--sage);font-weight:500;text-decoration:none;transition:color .18s}
+.nav-link:hover{color:var(--forest)}
+.nav-patient{font-size:12px;color:var(--gray);text-decoration:none;padding:8px 16px;border:1px solid rgba(212,184,150,.4);border-radius:50px;transition:all .18s}
+.nav-patient:hover{border-color:var(--sage-light);color:var(--sage)}
+.nav-cta{padding:10px 22px;border-radius:50px;background:linear-gradient(135deg,var(--sage),var(--forest));color:#fff;font-size:13px;font-weight:500;text-decoration:none;transition:all .2s;box-shadow:0 3px 14px rgba(45,74,48,.25)}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(45,74,48,.35)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 40px 80px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 70% 60% at 30% 40%,rgba(168,197,160,.2) 0%,transparent 60%),radial-gradient(ellipse 50% 70% at 80% 70%,rgba(212,184,150,.14) 0%,transparent 55%),radial-gradient(ellipse 40% 40% at 10% 85%,rgba(201,168,76,.07) 0%,transparent 50%)}
+.hero-inner{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sage);font-weight:500;background:rgba(77,114,83,.08);border:1px solid rgba(77,114,83,.2);border-radius:50px;padding:6px 16px;margin-bottom:28px;animation:fadeUp .6s ease both}
+.hero-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,5.5vw,68px);font-weight:500;line-height:1.1;color:var(--forest);margin-bottom:14px;animation:fadeUp .6s .1s ease both}
+.hero-headline em{font-style:italic;color:var(--sage)}
+.hero-sub{font-size:17px;color:var(--gray);line-height:1.7;margin-bottom:32px;max-width:500px;font-weight:300;animation:fadeUp .6s .2s ease both}
+.hero-sub strong{color:var(--text);font-weight:500}
+.hero-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;animation:fadeUp .6s .3s ease both;margin-bottom:20px}
+.btn-hero{display:inline-flex;align-items:center;gap:9px;padding:15px 30px;border-radius:50px;background:linear-gradient(135deg,var(--sage),var(--forest));color:#fff;font-size:15px;font-weight:500;text-decoration:none;transition:all .22s;box-shadow:0 6px 24px rgba(45,74,48,.28);font-family:'DM Sans',sans-serif}
+.btn-hero:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(45,74,48,.38)}
+.btn-hero-outline{display:inline-flex;align-items:center;gap:8px;padding:15px 26px;border-radius:50px;border:1.5px solid rgba(77,114,83,.4);color:var(--sage);font-size:15px;font-weight:500;text-decoration:none;transition:all .18s;font-family:'DM Sans',sans-serif;background:transparent}
+.btn-hero-outline:hover{background:rgba(77,114,83,.07);border-color:var(--sage)}
+.hero-note{font-size:12px;color:var(--gray);display:flex;align-items:center;gap:6px;animation:fadeUp .6s .35s ease both}
+.hero-note::before{content:'✓';color:var(--sage);font-weight:600}
+.hero-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px;animation:fadeUp .6s .4s ease both}
+.hchip{padding:5px 12px;border-radius:50px;font-size:11px;font-weight:500;background:rgba(250,246,239,.9);border:1.5px solid rgba(122,158,126,.28);color:var(--sage-dark);white-space:nowrap}
+.hchip-special{background:rgba(77,114,83,.08);border-color:rgba(77,114,83,.3);color:var(--sage)}
+
+/* HERO VISUAL PANEL */
+.hero-visual{background:var(--white);border:1px solid rgba(212,184,150,.3);border-radius:24px;padding:22px;box-shadow:0 8px 40px rgba(45,74,48,.1);animation:fadeUp .6s .2s ease both}
+.hv-label{font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:var(--gray);font-weight:500;margin-bottom:14px;padding:0 4px}
+.hv-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.hv-card{border-radius:14px;padding:14px;background:var(--cream);border:1px solid rgba(212,184,150,.3);transition:all .18s;position:relative;overflow:hidden}
+.hv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;border-radius:14px 14px 0 0}
+.hv-green::before{background:linear-gradient(90deg,#4d7253,#7ab87e)}
+.hv-gold::before{background:linear-gradient(90deg,#c9a84c,#e8c96a)}
+.hv-blue::before{background:linear-gradient(90deg,#2980b9,#7fb3d3)}
+.hv-terra::before{background:linear-gradient(90deg,#c17f5a,#e8b89a)}
+.hv-sage::before{background:linear-gradient(90deg,#2d4a30,#4d7253)}
+.hv-patient::before{background:linear-gradient(90deg,#7ab87e,#a8c5a0)}
+.hv-card:hover{box-shadow:0 4px 16px rgba(45,74,48,.1);transform:translateY(-1px);border-color:rgba(122,158,126,.35)}
+.hv-icon{font-size:22px;display:block;margin-bottom:7px}
+.hv-title{font-size:13px;font-weight:600;color:var(--forest);margin-bottom:3px;font-family:'Cormorant Garamond',serif}
+.hv-desc{font-size:10px;color:var(--gray);line-height:1.5;margin-bottom:7px}
+.hv-tag{display:inline-block;font-size:8px;padding:2px 8px;border-radius:6px;font-weight:500;background:rgba(77,114,83,.08);color:var(--sage);border:1px solid rgba(77,114,83,.2)}
+.hv-tag-free{background:rgba(77,114,83,.1);border-color:rgba(77,114,83,.3);color:var(--sage-dark)}
+.hv-more{text-align:center;font-size:11px;color:var(--gray);padding:8px;background:rgba(212,184,150,.1);border-radius:10px;border:1px solid rgba(212,184,150,.25)}
+
+/* STATS BAR */
+.stats-bar{background:var(--forest);padding:32px 40px}
+.stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.stat-item{text-align:center;padding:0 20px;border-right:1px solid rgba(168,197,160,.12)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:#fff;line-height:1;margin-bottom:6px}
+.stat-label{font-size:12px;color:rgba(168,197,160,.6);line-height:1.4}
+
+/* PAIN SECTION — dark forest like patient page */
+.pain-section{padding:90px 40px;background:var(--forest);position:relative;overflow:hidden}
+.pain-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 30% 50%,rgba(168,197,160,.06) 0%,transparent 60%)}
+.pain-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.pain-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sage-light);font-weight:500;margin-bottom:16px;opacity:.7}
+.pain-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,50px);font-weight:400;color:#fff;line-height:1.2;margin-bottom:44px;max-width:600px}
+.pain-headline em{font-style:italic;color:var(--sage-light)}
+.pain-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.pain-card{background:rgba(255,255,255,.04);border:1px solid rgba(168,197,160,.12);border-radius:18px;padding:24px;transition:all .2s}
+.pain-card:hover{background:rgba(255,255,255,.07);border-color:rgba(168,197,160,.25);transform:translateY(-2px)}
+.pain-emoji{font-size:28px;margin-bottom:12px;display:block}
+.pain-title{font-size:15px;font-weight:500;color:#fff;margin-bottom:7px;font-family:'Cormorant Garamond',serif}
+.pain-desc{font-size:13px;color:rgba(255,255,255,.5);line-height:1.65}
+
+/* SECTION COMMON */
+.section-eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sage);font-weight:500;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-eyebrow::before{content:'';display:block;width:24px;height:1.5px;background:var(--sage)}
+.section-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:500;color:var(--forest);line-height:1.15;margin-bottom:50px;max-width:620px}
+.section-headline em{font-style:italic;color:var(--sage)}
+
+/* TOOLS — same white card style as patient features */
+.tools-section{padding:100px 40px;position:relative}
+.tools-inner{max-width:1100px;margin:0 auto}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.tool-card{background:var(--white);border-radius:20px;padding:28px;border:1px solid rgba(212,184,150,.25);box-shadow:0 4px 20px rgba(45,74,48,.06);transition:all .22s;position:relative;overflow:hidden}
+.tool-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:20px 20px 0 0}
+.tc-green::before{background:linear-gradient(90deg,#4d7253,#7ab87e)}
+.tc-gold::before{background:linear-gradient(90deg,#c9a84c,#e8c96a)}
+.tc-blue::before{background:linear-gradient(90deg,#2980b9,#7fb3d3)}
+.tc-terra::before{background:linear-gradient(90deg,#c17f5a,#e8b89a)}
+.tc-purple::before{background:linear-gradient(90deg,#8e44ad,#b07ad4)}
+.tc-sage::before{background:linear-gradient(90deg,#2d4a30,#4d7253)}
+.tc-navy::before{background:linear-gradient(90deg,#1a3a5c,#2d6aa0)}
+.tc-patient::before{background:linear-gradient(90deg,#7ab87e,#a8c5a0)}
+.tool-card:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(45,74,48,.12)}
+.tool-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
+.ti-green{background:rgba(77,114,83,.1)}.ti-gold{background:rgba(201,168,76,.1)}.ti-blue{background:rgba(41,128,185,.1)}.ti-terra{background:rgba(193,127,90,.1)}.ti-purple{background:rgba(142,68,173,.1)}.ti-sage{background:rgba(45,74,48,.08)}.ti-navy{background:rgba(26,58,92,.08)}.ti-patient{background:rgba(122,184,126,.12)}
+.tool-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--forest);margin-bottom:8px}
+.tool-desc{font-size:13px;color:var(--gray);line-height:1.65}
+.tool-badge{display:inline-block;margin-top:12px;font-size:10px;padding:3px 10px;border-radius:6px;background:rgba(201,168,76,.1);color:#8a6020;border:1px solid rgba(201,168,76,.22);font-weight:500}
+.tool-badge-patient{display:inline-block;margin-top:12px;font-size:10px;padding:3px 10px;border-radius:6px;background:rgba(77,114,83,.1);color:var(--sage);border:1px solid rgba(77,114,83,.22);font-weight:500}
+
+/* DUAL ACCESS — dark forest */
+.dual-section{padding:80px 40px;background:var(--forest);position:relative;overflow:hidden}
+.dual-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 70% 50%,rgba(168,197,160,.06) 0%,transparent 60%)}
+.dual-inner{max-width:960px;margin:0 auto;position:relative;z-index:1}
+.dual-card{background:rgba(255,255,255,.05);border:1px solid rgba(168,197,160,.15);border-radius:24px;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.dual-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(168,197,160,.55);font-weight:500;margin-bottom:14px}
+.dual-headline{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:400;color:#fff;line-height:1.2;margin-bottom:16px}
+.dual-headline em{font-style:italic;color:var(--sage-light)}
+.dual-desc{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:24px;font-weight:300}
+.dual-features{display:flex;flex-direction:column;gap:11px}
+.dual-feat{display:flex;align-items:flex-start;gap:12px;padding:14px;background:rgba(255,255,255,.04);border-radius:12px;border:1px solid rgba(168,197,160,.1)}
+.df-icon{width:36px;height:36px;border-radius:9px;background:rgba(168,197,160,.1);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.df-text strong{display:block;font-size:13px;color:#fff;margin-bottom:2px}
+.df-text span{font-size:12px;color:rgba(255,255,255,.5)}
+
+/* DFH SECTION — warm cream background */
+.dfh-section{padding:90px 40px;background:linear-gradient(180deg,var(--cream) 0%,rgba(212,184,150,.12) 100%)}
+.dfh-inner{max-width:1000px;margin:0 auto}
+.dfh-card{background:linear-gradient(135deg,var(--navy),#1e4a7a);border-radius:24px;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;box-shadow:0 12px 48px rgba(26,58,92,.2);position:relative;overflow:hidden}
+.dfh-card::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.04) 0%,transparent 70%)}
+.dfh-eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);font-weight:500;margin-bottom:12px}
+.dfh-title{font-family:'Cormorant Garamond',serif;font-size:34px;color:#fff;margin-bottom:12px;font-weight:400}
+.dfh-desc{font-size:14px;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:24px;font-weight:300}
+.dfh-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.dfh-badge{font-size:10px;padding:4px 12px;border-radius:10px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.14);font-weight:500}
+.dfh-features{display:flex;flex-direction:column;gap:11px}
+.dfh-feat{display:flex;align-items:flex-start;gap:10px;font-size:13px}
+.dfh-check{width:18px;height:18px;border-radius:50%;background:rgba(45,106,160,.3);color:#7fb3d3;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;margin-top:1px}
+.dfh-feat-text{color:rgba(255,255,255,.75);line-height:1.55}
+
+/* HOW IT WORKS — white background like patient */
+.how-section{padding:100px 40px;background:var(--white)}
+.how-inner{max-width:900px;margin:0 auto}
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:50px;position:relative}
+.how-steps::before{content:'';position:absolute;top:28px;left:calc(16.67% + 20px);right:calc(16.67% + 20px);height:1.5px;background:linear-gradient(90deg,rgba(168,197,160,.5),rgba(168,197,160,.5));z-index:0}
+.how-step{text-align:center;position:relative;z-index:1}
+.how-num{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--forest));color:#fff;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 4px 16px rgba(45,74,48,.25)}
+.how-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:var(--forest);margin-bottom:8px}
+.how-desc{font-size:13px;color:var(--gray);line-height:1.65}
+
+/* PRICING — cream background, dark card like patient */
+.pricing-section{padding:100px 40px;background:linear-gradient(180deg,var(--cream) 0%,rgba(212,184,150,.12) 100%)}
+.pricing-inner{max-width:960px;margin:0 auto}
+.pricing-eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sage);font-weight:500;margin-bottom:14px;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px}
+.pricing-eyebrow::before{content:'';display:block;width:24px;height:1.5px;background:var(--sage)}
+.pricing-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:500;color:var(--forest);line-height:1.15;margin-bottom:50px;text-align:center}
+.pricing-headline em{font-style:italic;color:var(--sage)}
+.pricing-card{background:linear-gradient(160deg,var(--forest) 0%,#2d5c34 100%);border-radius:28px;padding:44px;box-shadow:0 12px 48px rgba(30,58,34,.2);position:relative;overflow:hidden}
+.pricing-card::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(168,197,160,.06) 0%,transparent 70%)}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start;position:relative;z-index:1}
+.price-tier{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:rgba(168,197,160,.6);font-weight:500;margin-bottom:10px}
+.price-name{font-family:'Cormorant Garamond',serif;font-size:30px;color:#fff;margin-bottom:20px;font-weight:400}
+.price-amount-wrap{display:flex;align-items:baseline;gap:4px;margin-bottom:6px}
+.price-big{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;color:#fff;line-height:1}
+.price-per{font-size:16px;color:rgba(255,255,255,.55)}
+.price-annual{font-size:13px;color:var(--sage-light);margin-bottom:20px;font-weight:500}
+.price-no-trial{display:inline-flex;align-items:center;gap:6px;font-size:11px;background:rgba(168,197,160,.1);color:rgba(168,197,160,.8);border:1px solid rgba(168,197,160,.2);border-radius:50px;padding:5px 14px;margin-bottom:28px}
+.price-divider{height:1px;background:rgba(168,197,160,.12);margin-bottom:28px}
+.price-features{display:flex;flex-direction:column;gap:11px;margin-bottom:32px}
+.pf-item{display:flex;align-items:flex-start;gap:10px;font-size:13px}
+.pf-check{flex-shrink:0;width:18px;height:18px;border-radius:50%;background:rgba(168,197,160,.15);color:var(--sage-light);display:flex;align-items:center;justify-content:center;font-size:10px;margin-top:1px}
+.pf-text{color:rgba(255,255,255,.75);line-height:1.5}
+.pf-text strong{color:rgba(255,255,255,.95);font-weight:500}
+.btn-pricing{display:block;width:100%;padding:15px;border-radius:14px;background:linear-gradient(135deg,#7ab87e,#4d7253);color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;text-align:center;text-decoration:none;transition:all .2s;box-shadow:0 5px 20px rgba(122,184,126,.22);border:none;cursor:pointer}
+.btn-pricing:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(122,184,126,.35)}
+.price-note{font-size:12px;text-align:center;color:rgba(255,255,255,.35);margin-top:12px}
+.price-include-label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:rgba(168,197,160,.5);font-weight:500;margin-bottom:8px}
+.price-include-item{background:rgba(255,255,255,.05);border:1px solid rgba(168,197,160,.12);border-radius:12px;padding:13px 15px;display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.pi-icon{font-size:18px;flex-shrink:0}
+.pi-text strong{display:block;font-size:13px;color:#fff;margin-bottom:2px}
+.pi-text span{font-size:11px;color:rgba(255,255,255,.4)}
+.coupon-wrap{margin-top:32px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.22);border-radius:16px;padding:18px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:relative;z-index:1}
+.coupon-icon{font-size:22px;flex-shrink:0}
+.coupon-text strong{display:block;font-size:14px;color:#fff;margin-bottom:2px}
+.coupon-text span{font-size:12px;color:rgba(255,255,255,.4)}
+.coupon-code{margin-left:auto;background:rgba(255,255,255,.07);border:1.5px dashed rgba(201,168,76,.45);border-radius:9px;padding:8px 18px;font-family:'Courier New',monospace;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:.1em;cursor:pointer;transition:all .15s;white-space:nowrap}
+.coupon-code:hover{background:rgba(201,168,76,.1)}
+
+/* DISCLAIMER */
+.disclaimer-strip{padding:28px 40px;background:rgba(212,184,150,.12);border-top:1px solid rgba(212,184,150,.3);border-bottom:1px solid rgba(212,184,150,.3)}
+.disclaimer-inner{max-width:900px;margin:0 auto;display:flex;align-items:flex-start;gap:14px}
+.disclaimer-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.disclaimer-text{font-size:12px;color:var(--gray);line-height:1.7}
+.disclaimer-text strong{color:var(--text);font-weight:500}
+
+/* FINAL CTA — dark forest like patient */
+.cta-section{padding:100px 40px;background:linear-gradient(160deg,var(--forest) 0%,#2d5c34 100%);position:relative;overflow:hidden;text-align:center}
+.cta-section::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(168,197,160,.07) 0%,transparent 70%)}
+.cta-inner{max-width:600px;margin:0 auto;position:relative;z-index:1}
+.cta-eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(168,197,160,.6);font-weight:500;margin-bottom:20px}
+.cta-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,56px);font-weight:400;color:#fff;line-height:1.15;margin-bottom:16px}
+.cta-headline em{font-style:italic;color:var(--sage-light)}
+.cta-sub{font-size:16px;color:rgba(255,255,255,.55);line-height:1.65;margin-bottom:40px;font-weight:300}
+.btn-cta-main{display:inline-flex;align-items:center;gap:10px;padding:18px 40px;border-radius:50px;background:linear-gradient(135deg,#7ab87e,#4d7253);color:#fff;font-size:16px;font-weight:500;text-decoration:none;transition:all .22s;box-shadow:0 8px 28px rgba(122,184,126,.28);font-family:'DM Sans',sans-serif;margin-bottom:16px}
+.btn-cta-main:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(122,184,126,.42)}
+.cta-note{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:16px}
+.cta-patient-link{display:block;font-size:13px;color:rgba(168,197,160,.55);text-decoration:none;transition:color .18s}
+.cta-patient-link:hover{color:var(--sage-light)}
+
+/* FOOTER */
+footer{padding:32px 40px;background:var(--forest);border-top:1px solid rgba(168,197,160,.1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(255,255,255,.35)}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap}
+.footer-link{font-size:12px;color:rgba(255,255,255,.25);text-decoration:none;transition:color .15s}
+.footer-link:hover{color:rgba(168,197,160,.6)}
+.footer-disc{font-size:10px;color:rgba(255,255,255,.18);text-align:center;width:100%;line-height:1.6}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav{padding:14px 20px}
+  .nav-link,.nav-patient{display:none}
+  .hero{padding:100px 24px 60px}
+  .hero-inner{grid-template-columns:1fr;gap:32px}
+  .hero-visual{display:none}
+  .stats-inner{grid-template-columns:1fr 1fr}
+  .stat-item{border-right:none}
+  .pain-section,.tools-section,.dual-section,.dfh-section,.how-section,.pricing-section,.cta-section{padding:60px 24px}
+  .dual-card,.dfh-card{grid-template-columns:1fr;gap:28px;padding:28px}
+  .pricing-grid{grid-template-columns:1fr}
+  .how-steps{grid-template-columns:1fr;gap:24px}
+  .how-steps::before{display:none}
+  footer{padding:24px 20px;flex-direction:column;text-align:center}
+  .coupon-code{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://rootmedhealth.com" class="nav-logo">
+    <img src="https://rootmedhealth.com/logo.png" alt="Root Med Health"
+      onerror="this.style.display='none';document.querySelector('.nav-logo-fallback').style.display='flex'">
+    <div class="nav-logo-fallback" style="display:none">
+      <div class="nav-orb">🌿</div>
+      <span class="nav-name">Root Med Health</span>
+    </div>
+  </a>
+  <div class="nav-right">
+    <a href="#tools" class="nav-link">Tools</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="https://rootmedhealth.com/patient" class="nav-patient">Patient? →</a>
+    <a href="https://rootmedhealth.com" class="nav-cta">Start Provider Subscription →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">⚕️ For Licensed Healthcare Providers</div>
+      <h1 class="hero-headline">Your patients deserve<br>functional medicine.<br><em>Your schedule doesn't.</em></h1>
+      <p class="hero-sub">A complete clinical AI suite — <strong>10 tools, one subscription.</strong> Plus full patient access for your own health, included free.</p>
+      <div class="hero-actions">
+        <a href="https://rootmedhealth.com" class="btn-hero">⚕️ Start Provider Subscription</a>
+        <a href="#tools" class="btn-hero-outline">See all 10 tools →</a>
+      </div>
+      <div class="hero-note" style="margin-bottom:22px">$59/month or $599/year · Full access from day one</div>
+      <div class="hero-chips">
+        <span class="hchip">🔬 AI Research</span>
+        <span class="hchip">📋 IFM Protocols</span>
+        <span class="hchip">🩺 Protocol Builder</span>
+        <span class="hchip">📄 Handouts</span>
+        <span class="hchip">💊 DFH Store</span>
+        <span class="hchip">🧪 Lab Reference</span>
+        <span class="hchip">🥗 Dietary Education</span>
+        <span class="hchip">📚 Supplement Library</span>
+        <span class="hchip">🖼️ Art Gallery</span>
+        <span class="hchip hchip-special">🌱 Full Patient Access Free</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hv-label">Provider Dashboard — 10 Clinical Tools</div>
+      <div class="hv-grid">
+        <div class="hv-card hv-green"><span class="hv-icon">🔬</span><div class="hv-title">Condition Research</div><div class="hv-desc">AI-powered functional medicine clinical briefs in seconds</div><div class="hv-tag">AI Powered</div></div>
+        <div class="hv-card hv-gold"><span class="hv-icon">🩺</span><div class="hv-title">Protocol Builder</div><div class="hv-desc">Protocol templates linked to DFH products · Printable PDF</div><div class="hv-tag">DFH Linked</div></div>
+        <div class="hv-card hv-blue"><span class="hv-icon">📄</span><div class="hv-title">Patient Handouts</div><div class="hv-desc">7 handout types · Print-ready in 30 seconds</div><div class="hv-tag">Print Ready</div></div>
+        <div class="hv-card hv-terra"><span class="hv-icon">🧪</span><div class="hv-title">Lab Reference</div><div class="hv-desc">Conventional vs functional ranges · 12 markers</div><div class="hv-tag">Functional Ranges</div></div>
+        <div class="hv-card hv-sage"><span class="hv-icon">📋</span><div class="hv-title">Protocol Library</div><div class="hv-desc">6 IFM-informed protocols with full clinical guidance</div><div class="hv-tag">IFM-Informed</div></div>
+        <div class="hv-card hv-patient"><span class="hv-icon">🌱</span><div class="hv-title">Patient Access</div><div class="hv-desc">Full patient platform for your own health — included free</div><div class="hv-tag hv-tag-free">Included Free</div></div>
+      </div>
+      <div class="hv-more">+ Dietary Education · Supplement Library · DFH Store · Art Gallery</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-num">10</div><div class="stat-label">Clinical tools in one subscription</div></div>
+    <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">IFM-informed protocols</div></div>
+    <div class="stat-item"><div class="stat-num">12</div><div class="stat-label">Functional lab markers with ranges</div></div>
+    <div class="stat-item"><div class="stat-num">$0</div><div class="stat-label">Extra cost for full patient access</div></div>
+  </div>
+</div>
+
+<!-- PAIN POINTS -->
+<section class="pain-section">
+  <div class="pain-inner">
+    <div class="pain-label reveal">The clinical reality</div>
+    <h2 class="pain-headline reveal">You already practice<br>functional medicine.<br><em>The tools haven't caught up.</em></h2>
+    <div class="pain-grid">
+      <div class="pain-card reveal"><span class="pain-emoji">⏱️</span><div class="pain-title">Patient education takes too long to prepare</div><div class="pain-desc">Writing a handout on the gut-thyroid connection from scratch before every appointment is not sustainable. Root Med Health generates it in 30 seconds.</div></div>
+      <div class="pain-card reveal"><span class="pain-emoji">📋</span><div class="pain-title">Clinical protocols are inconsistent and hard to reproduce</div><div class="pain-desc">Every provider does it differently. A protocol builder with Designs for Health supplement links gives your patients something professional and actionable every time.</div></div>
+      <div class="pain-card reveal"><span class="pain-emoji">🔬</span><div class="pain-title">Functional lab ranges are scattered across sources</div><div class="pain-desc">You know conventional ranges underdiagnose subclinical dysfunction — but pulling functional ranges from memory mid-appointment is inefficient. One reference, always accessible.</div></div>
+      <div class="pain-card reveal"><span class="pain-emoji">💊</span><div class="pain-title">Patients buy the wrong supplement form</div><div class="pain-desc">You recommend magnesium glycinate. Your patient buys magnesium oxide. A protocol template linking directly to the correct Designs for Health product closes this gap completely.</div></div>
+      <div class="pain-card reveal"><span class="pain-emoji">🥗</span><div class="pain-title">Dietary education takes 20 minutes to individualize</div><div class="pain-desc">Generating a complete anti-inflammatory dietary education document for a specific patient used to take 20 minutes. It now takes 30 seconds.</div></div>
+      <div class="pain-card reveal"><span class="pain-emoji">📱</span><div class="pain-title">Patients want a digital tool between visits</div><div class="pain-desc">Your patients are tracking symptoms in the Notes app and Googling supplement dosing. Root Med Health gives them a structured platform aligned with your clinical approach.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="tools-section" id="tools">
+  <div class="tools-inner">
+    <div class="section-eyebrow reveal">10 tools — one subscription</div>
+    <h2 class="section-headline reveal">Everything a functional<br>medicine provider needs,<br><em>finally in one place.</em></h2>
+    <div class="tools-grid">
+      <div class="tool-card tc-green reveal"><div class="tool-icon ti-green">🔬</div><div class="tool-title">Condition Research Engine</div><div class="tool-desc">Search any condition for a structured functional medicine clinical brief — root cause framework, lab workup guidance, dietary protocol, and supplement considerations. Powered by AI. Results in seconds.</div></div>
+      <div class="tool-card tc-terra reveal"><div class="tool-icon ti-terra">🥗</div><div class="tool-title">Dietary Education Generator</div><div class="tool-desc">Generate comprehensive patient-ready dietary education for 12 protocols — Anti-Inflammatory, Thyroid Support, Blood Sugar Balance, Gut Healing 4R, Ketogenic, and more. Customize by patient population and key nutrients.</div></div>
+      <div class="tool-card tc-blue reveal"><div class="tool-icon ti-blue">📚</div><div class="tool-title">Supplement Education Library</div><div class="tool-desc">Full clinical reference for 10 key supplements — mechanisms, preferred forms, therapeutic dosing, timing, interactions, and contraindications. All generic and form-specific. Send directly to the handout generator.</div></div>
+      <div class="tool-card tc-gold reveal"><div class="tool-icon ti-gold">🧪</div><div class="tool-title">Functional Lab Reference</div><div class="tool-desc">12 lab markers with conventional vs functional medicine reference ranges, clinical significance notes, and flag guidance. TSH, fT3, fT4, Vitamin D, ferritin, fasting insulin, homocysteine, and more.</div></div>
+      <div class="tool-card tc-purple reveal"><div class="tool-icon ti-purple">📋</div><div class="tool-title">IFM Protocol Library</div><div class="tool-desc">Six evidence-informed functional medicine protocols — Thyroid Optimization, Blood Sugar Balance, Gut Restoration 4R, Adrenal and HPA Axis, Cardiovascular Protection, and Hormone Balance — each with full assessment, intervention, dietary, and supplement guidance.</div></div>
+      <div class="tool-card tc-green reveal"><div class="tool-icon ti-green">📄</div><div class="tool-title">Patient Handout Generator</div><div class="tool-desc">Generate plain-language, print-ready patient education on any topic in 30 seconds. Seven handout types including dietary protocols, supplement instructions, lab results explained, health conditions, and post-appointment summaries.</div></div>
+      <div class="tool-card tc-navy reveal"><div class="tool-icon ti-navy">🩺</div><div class="tool-title">Protocol Builder</div><div class="tool-desc">Build fully customizable functional medicine protocol templates with five sections — supplements linked to Designs for Health products, dietary recommendations, activity prescriptions, follow-up labs, and protocol notes. Generates a professional printable PDF. No patient-identifiable information is entered or stored.</div></div>
+      <div class="tool-card tc-navy reveal"><div class="tool-icon ti-navy">💊</div><div class="tool-title">Designs for Health Provider Store</div><div class="tool-desc">Access the full Designs for Health product catalog at provider pricing. Products you recommend in protocol templates link directly to the store for patient purchase — no confusion about which brand or form to buy.</div></div>
+      <div class="tool-card tc-sage reveal"><div class="tool-icon ti-sage">🖼️</div><div class="tool-title">Office Art Gallery</div><div class="tool-desc">Upload, organize, download, and manage your Midjourney-generated botanical and wellness artwork for office display and printing — all in one place, accessible from any device.</div></div>
+      <div class="tool-card tc-patient reveal"><div class="tool-icon ti-patient">🌱</div><div class="tool-title">Full Patient Access — Included Free</div><div class="tool-desc">Switch to Patient mode anytime to use the symptom checker, net carb tracker, allergy-safe recipe generator, wearable device sync, personal care plan, supplement store, and daily tracking tools for your own health.</div><span class="tool-badge-patient">🌱 Included at no extra cost</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DUAL ACCESS -->
+<section class="dual-section">
+  <div class="dual-inner">
+    <div class="dual-card reveal">
+      <div>
+        <div class="dual-label">Dual-mode access — included with every provider subscription</div>
+        <h2 class="dual-headline">One subscription.<br><em>Two complete platforms.</em></h2>
+        <p class="dual-desc">Your Provider subscription gives you everything in Patient Complete as well — at no extra cost. Use the toggle in the header to switch between your clinical suite and your personal health dashboard anytime.</p>
+        <a href="https://rootmedhealth.com" class="btn-hero" style="display:inline-flex;margin-top:8px">Get Provider Access →</a>
+      </div>
+      <div class="dual-features">
+        <div class="dual-feat"><div class="df-icon">🌿</div><div class="df-text"><strong>AI Symptom Checker</strong><span>Run your own root cause analysis — educational, for personal health</span></div></div>
+        <div class="dual-feat"><div class="df-icon">🔬</div><div class="df-text"><strong>Personal Care Plan</strong><span>Enter your own lab values and receive a personalized AI care plan</span></div></div>
+        <div class="dual-feat"><div class="df-icon">📊</div><div class="df-text"><strong>Health Tracking Dashboard</strong><span>Net carb tracker, daily metrics, weekly charts, daily notes</span></div></div>
+        <div class="dual-feat"><div class="df-icon">⌚</div><div class="df-text"><strong>Wearable Device Integration</strong><span>Connect your Oura Ring, Apple Watch, Garmin, or Fitbit</span></div></div>
+        <div class="dual-feat"><div class="df-icon">🍽️</div><div class="df-text"><strong>Allergy-Safe Recipe Library</strong><span>AI-generated recipes matched to your personal allergy profile</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DFH SECTION -->
+<section class="dfh-section">
+  <div class="dfh-inner">
+    <div class="dfh-card reveal">
+      <div>
+        <div class="dfh-eyebrow">Official supplement partner</div>
+        <div class="dfh-title">Designs for Health — Built Into Every Protocol</div>
+        <p class="dfh-desc">Root Med Health is built around Designs for Health — the professional-grade supplement line trusted by functional medicine practitioners. Your supplement recommendations link directly to DFH products so patients know exactly what to buy.</p>
+        <div class="dfh-badges">
+          <span class="dfh-badge">✓ Practitioner-grade formulations</span>
+          <span class="dfh-badge">✓ Third-party tested</span>
+          <span class="dfh-badge">✓ GMP certified</span>
+          <span class="dfh-badge">✓ Correct forms and doses</span>
+          <span class="dfh-badge">✓ Provider pricing</span>
+        </div>
+        <a href="https://rootmedhealth.com" class="btn-hero" style="display:inline-flex">Access Provider Store →</a>
+      </div>
+      <div class="dfh-features">
+        <div class="dfh-feat"><div class="dfh-check">✓</div><div class="dfh-feat-text">Protocol Builder has a DFH product dropdown for every supplement — link directly to the correct product in every protocol template</div></div>
+        <div class="dfh-feat"><div class="dfh-check">✓</div><div class="dfh-feat-text">Protocol templates include a "Shop Now" button next to each supplement linking directly to the correct DFH product</div></div>
+        <div class="dfh-feat"><div class="dfh-check">✓</div><div class="dfh-feat-text">No more patients buying the wrong form, wrong dose, or from an unverified manufacturer</div></div>
+        <div class="dfh-feat"><div class="dfh-check">✓</div><div class="dfh-feat-text">Provider store access at provider pricing — separate from the patient-facing store</div></div>
+        <div class="dfh-feat"><div class="dfh-check">✓</div><div class="dfh-feat-text">Supplement education library references DFH product equivalents for every supplement profiled</div></div>
+        <div class="dfh-feat"><div class="dfh-check">✓</div><div class="dfh-feat-text">Wholesale pricing coming when DFH integration is fully confirmed</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="how-inner">
+    <div class="section-eyebrow reveal">Getting started</div>
+    <h2 class="section-headline reveal">Full access in<br><em>three minutes.</em></h2>
+    <div class="how-steps">
+      <div class="how-step reveal"><div class="how-num">1</div><div class="how-title">Create your account</div><div class="how-desc">Sign up at rootmedhealth.com — no app download required. Select Provider during onboarding. Full access from day one.</div></div>
+      <div class="how-step reveal"><div class="how-num">2</div><div class="how-title">Explore your clinical suite</div><div class="how-desc">Ten tools are immediately available. Start with condition research, build your first protocol template, or generate a patient handout for your next appointment.</div></div>
+      <div class="how-step reveal"><div class="how-num">3</div><div class="how-title">Switch to patient mode anytime</div><div class="how-desc">Use the Patient / Provider toggle to access the full patient platform for your own health — tracking, symptom checker, care plan, wearables, and recipes.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-inner">
+    <div class="pricing-eyebrow reveal">Provider subscription</div>
+    <h2 class="pricing-headline reveal">Ten tools.<br><em>One straightforward price.</em></h2>
+    <div class="pricing-card reveal">
+      <div class="pricing-grid">
+        <div>
+          <div class="price-tier">Provider Subscription</div>
+          <div class="price-name">Complete Clinical Suite</div>
+          <div class="price-amount-wrap"><span class="price-big">$59</span><span class="price-per">/month</span></div>
+          <div class="price-annual">or $599/year — save 15% ($60 off)</div>
+          <div class="price-no-trial">⚕️ Full access from day one — no trial required</div>
+          <div class="price-divider"></div>
+          <div class="price-features">
+            <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text"><strong>AI Condition Research Engine</strong></div></div>
+            <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text"><strong>Dietary Education Generator</strong> — 12 protocols</div></div>
+            <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text"><strong>Supplement Education Library</strong> — clinical reference</div></div>
+            <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text"><strong>Functional Lab Reference</strong> — 12 markers</div></div>
+            <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text"><strong>IFM Protocol Library</strong> — 6 complete protocols</div></div>
+            <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text"><strong>Patient Handout Generator</strong> — 7 handout types</div></div>
+            <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text"><strong>Protocol Builder</strong> with DFH supplement links — no patient identifiers stored</div></div>
+            <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text"><strong>Designs for Health Provider Store</strong></div></div>
+            <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text"><strong>Office Art Gallery</strong></div></div>
+            <div class="pf-item"><div class="pf-check">✓</div><div class="pf-text" style="color:#7ab87e"><strong>Full Patient Complete access — included free</strong></div></div>
+          </div>
+          <a href="https://rootmedhealth.com" class="btn-pricing">Start Provider Subscription →</a>
+          <div class="price-note">Cancel anytime · Monthly or annual billing · No setup fees</div>
+        </div>
+        <div>
+          <div class="price-include-label">Also included — Patient Complete value ($79 + $12.99/mo)</div>
+          <div class="price-include-item"><div class="pi-icon">🌿</div><div class="pi-text"><strong>AI Symptom Checker</strong><span>Root cause analysis for personal health</span></div></div>
+          <div class="price-include-item"><div class="pi-icon">🔬</div><div class="pi-text"><strong>Personal AI Care Plan</strong><span>Lab-informed personalized recommendations</span></div></div>
+          <div class="price-include-item"><div class="pi-icon">📊</div><div class="pi-text"><strong>Daily Health Tracking</strong><span>Metrics, net carbs, weekly charts</span></div></div>
+          <div class="price-include-item"><div class="pi-icon">🍽️</div><div class="pi-text"><strong>Allergy-Safe Recipe Library</strong><span>AI-generated, personalized to your profile</span></div></div>
+          <div class="price-include-item"><div class="pi-icon">⌚</div><div class="pi-text"><strong>Wearable Device Sync</strong><span>Oura, Apple Watch, Garmin, Fitbit</span></div></div>
+          <div class="price-include-item"><div class="pi-icon">💊</div><div class="pi-text"><strong>Supplement Store Access</strong><span>Designs for Health patient store</span></div></div>
+          <div class="price-include-item"><div class="pi-icon">🔔</div><div class="pi-text"><strong>Daily Encouragement</strong><span>Morning quotes + evening reminders</span></div></div>
+        </div>
+      </div>
+      <div class="coupon-wrap">
+        <span class="coupon-icon">🎁</span>
+        <div class="coupon-text"><strong>Introductory offer — 3 months free</strong><span>Use code at checkout for 100% off your first 3 months</span></div>
+        <div class="coupon-code" onclick="navigator.clipboard?.writeText('ROOTPROVIDER3');this.textContent='✓ Copied!';setTimeout(()=>this.textContent='ROOTPROVIDER3',2000)" title="Click to copy">ROOTPROVIDER3</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer-strip">
+  <div class="disclaimer-inner">
+    <span class="disclaimer-icon">⚕️</span>
+    <div class="disclaimer-text"><strong>Supplementary clinical education tools only.</strong> Root Med Health provides AI-powered functional medicine educational content and clinical reference tools. All platform outputs are for educational and organizational purposes only and do not replace clinical judgment or evidence-based treatment guidelines. Providers are solely responsible for all clinical decisions, diagnoses, and treatment plans. Root Med Health LLC · rootmedhealth.com</div>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-eyebrow">Start today — full access from day one</div>
+    <h2 class="cta-headline">Your patients deserve<br>functional medicine.<br><em>Now you have the tools.</em></h2>
+    <p class="cta-sub">Join Root Med Health and bring a complete functional medicine clinical suite into your practice — AI-powered, evidence-informed, and built for the way you already practice.</p>
+    <a href="https://rootmedhealth.com" class="btn-cta-main">⚕️ Start Provider Subscription</a>
+    <div class="cta-note">$59/month or $599/year · Cancel anytime · Full patient access included free</div>
+    <a href="https://rootmedhealth.com/patient" class="cta-patient-link">Are you a patient? Visit rootmedhealth.com/patient →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">© 2026 Root Med Health LLC · rootmedhealth.com</div>
+  <div class="footer-links">
+    <a href="https://rootmedhealth.com" class="footer-link">Platform</a>
+    <a href="https://rootmedhealth.com/patient" class="footer-link">For Patients</a>
+    <a href="mailto:support@rootmedhealth.com" class="footer-link">support@rootmedhealth.com</a>
+  </div>
+  <div class="footer-disc">Root Med Health is an educational platform only and does not provide medical advice, diagnosis, or treatment. All AI-generated content and clinical reference tools are for educational and organizational purposes only. Providers are solely responsible for all clinical decisions. · Powered by Evidence-Based Wellness</div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.boxShadow = window.scrollY > 20 ? '0 2px 20px rgba(45,74,48,.1)' : 'none';
+});
+</script>
+</body>
+</html>
